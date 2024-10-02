@@ -93,9 +93,9 @@ Havola: ${url}`,
             [
               page != 0
                 ? {
-                    text: "◀️ Oldingisi",
-                    callback_data: "prev",
-                  }
+                  text: "◀️ Oldingisi",
+                  callback_data: "prev",
+                }
                 : { text: "", callback_data: "null" },
               {
                 text: `${page + 1}`,
@@ -103,9 +103,9 @@ Havola: ${url}`,
               },
               page < 29
                 ? {
-                    text: "Keyingisi ▶️",
-                    callback_data: "next",
-                  }
+                  text: "Keyingisi ▶️",
+                  callback_data: "next",
+                }
                 : { text: "", callback_data: "null" },
             ],
             [
@@ -135,9 +135,9 @@ Havola: ${url}`,
             [
               page != 0
                 ? {
-                    text: "◀️ Предыдущий",
-                    callback_data: "prev",
-                  }
+                  text: "◀️ Предыдущий",
+                  callback_data: "prev",
+                }
                 : { text: "", callback_data: "null" },
               {
                 text: `${page + 1}`,
@@ -145,9 +145,9 @@ Havola: ${url}`,
               },
               page < 29
                 ? {
-                    text: "Следующий ▶️",
-                    callback_data: "next",
-                  }
+                  text: "Следующий ▶️",
+                  callback_data: "next",
+                }
                 : { text: "", callback_data: "null" },
             ],
             [
@@ -165,11 +165,11 @@ Havola: ${url}`,
     bot
       .sendPhoto(chatId, photoUrl, {
         caption: `News\n
-Title: ${await translate(title, "en")}\n
-Description: ${await translate(description, "en")
-        }\n
-Author: ${await translate(author, "en")}\n
-Category: ${await translate(category, "en")}\n
+Title: ${news_language == 'en' ? title : await translate(title, "en")}\n
+Description: ${news_language == 'en' ? description : await translate(description, "en")
+          }\n
+Author: ${news_language == 'en' ? author : await translate(author, "en")}\n
+Category: ${news_language == 'en' ? category : await translate(category, "en")}\n
 Published time: ${published}
 
 Link: ${url}`,
@@ -178,9 +178,9 @@ Link: ${url}`,
             [
               page != 0
                 ? {
-                    text: "◀️ Previous",
-                    callback_data: "prev",
-                  }
+                  text: "◀️ Previous",
+                  callback_data: "prev",
+                }
                 : { text: "", callback_data: "null" },
               {
                 text: `${page + 1}`,
@@ -188,9 +188,9 @@ Link: ${url}`,
               },
               page < 29
                 ? {
-                    text: "Next ▶️",
-                    callback_data: "next",
-                  }
+                  text: "Next ▶️",
+                  callback_data: "next",
+                }
                 : { text: "", callback_data: "null" },
             ],
             [
