@@ -20,6 +20,7 @@
     "dotenv": "^16.4.5",
     "mongoose": "^8.6.3",
     "newsapi": "^2.4.1",
-    "node-telegram-bot-api": "^0.66.0"
+    "node-telegram-bot-api": "^0.66.0",
+    "sheetdb-js": "^1.0.3"
   }
 }
