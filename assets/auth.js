@@ -80,6 +80,6 @@ async function login() {
             alert('Login or password is wrong!');
         }
     } catch (error) {
-        alert('Internal server error!');
+        console.log('Internal server error!');
     }
 }
