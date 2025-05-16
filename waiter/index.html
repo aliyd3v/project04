@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waiter</title>
+    <link rel="stylesheet" href="./assets/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="main-container">
+        <h1>Waiter</h1>
+        <h3>Orders</h3>
+        <div id="orders-container"></div>
+    </div>
+
+    <div class="verify-delivered hidden">
+        <div id="verify-product-info" class="product-info"></div>
+
+        <div class="verify-popup-btns">
+            <div class="verify-question">
+                <h1>Delivered?</h1>
+            </div>
+            <button onclick="verifyDelivered()">Yes</button>
+            <button onclick="closeDeliveredVerify()">No</button>
+        </div>
+    </div>
+
+    <script src="./assets/index.js"></script>
+</body>
+
+</html>
