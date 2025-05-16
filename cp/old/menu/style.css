@@ -1,0 +1,21 @@
+body {
+    background-color: white;
+}
+
+.container {
+    width: 95vw;
+    height: 95vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu-button {
+    font-size: 20vw;
+    background-color: green;
+    cursor: pointer;
+    color: white;
+    border: 0;
+    border-radius: 3vw;
+    padding: 5vw;
+}
