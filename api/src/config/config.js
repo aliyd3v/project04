@@ -30,6 +30,9 @@ export const jwtExpiresIn = process.env.JWT_EXPIRES_IN
 export const salt = process.env.SALT
 
 // Supabase config
-export const supabaseUrl = process.env.SUPABASE_URL
-export const supabaseKey = process.env.SUPABASE_ACCESS_KEY
-export const supabaseBucketName = process.env.SUPABASE_BUCKET_NAME
+export const S3CLIENT_REGION = process.env.S3CLIENT_REGION
+export const S3CLIENT_ENDPOINT = process.env.S3CLIENT_ENDPOINT
+export const S3CLIENT_ACCESS_KEY_ID = process.env.S3CLIENT_ACCESS_KEY_ID
+export const S3CLIENT_SECRET_ACCESS_KEY = process.env.S3CLIENT_SECRET_ACCESS_KEY
+export const S3CLIENT_BUCKET_NAME = process.env.S3CLIENT_BUCKET_NAME
+export const SUPABASE_PROJECT_ID = process.env.SUPABASE_PROJECT_ID
