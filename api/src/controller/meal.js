@@ -234,17 +234,7 @@ ORDER BY meals.name ASC;`
             let imageUrl = null
             if (req.file) {
                 await storage.delete(meal.rows[0].file_name)
-                const { errUpload, data } = await storage.upload(req.file.filename, req.file.path)
-                if (errUpload) {
-                    fs.unlinkSync(req.file.path)
-                    return next(
-                        new AppError(500, 'fail', 'Uploading is failed! Please try again later.'),
-                        req,
-                        res,
-                        next
-                    )
-                }
-                imageUrl = data.publicUrl
+                imageUrl = await storage.upload(req.file.filename, req.file.path)
             }
             const updateQuery = req.file ? `UPDATE meals
 SET name = $1, price = $2, category_id = $3, active = $4, 
@@ -290,6 +280,7 @@ active, image_url, is_ready_product, created_at, updated_at;`
                 }
             })
         } catch (error) {
+            console.log(error)
             next(error)
         }
     },

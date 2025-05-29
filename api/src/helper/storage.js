@@ -1,6 +1,7 @@
 import { createReadStream } from 'fs'
 import { S3Client, DeleteObjectCommand, HeadBucketCommand, CreateBucketCommand } from '@aws-sdk/client-s3'
 import { Upload } from '@aws-sdk/lib-storage'
+import mime from 'mime-types'
 import {
     S3CLIENT_REGION,
     S3CLIENT_ENDPOINT,
@@ -34,6 +35,7 @@ const checkBucket = async () => {
 const storage = {
     upload: async (fileName, filePath) => {
         try {
+            const contentType = mime.lookup(fileName)
             // Checking bucket.
             await checkBucket()
 
@@ -44,7 +46,7 @@ const storage = {
                 params: {
                     Bucket: S3CLIENT_BUCKET_NAME,
                     Key: fileName,
-                    ContentType: ['image/jpeg', 'image/png', 'image/gif', 'image/jpg'],
+                    ContentType: contentType,
                     Body: file,
                 },
                 queueSize: 4,
@@ -58,11 +60,15 @@ const storage = {
         }
     },
     delete: async fileName => {
-        const command = new DeleteObjectCommand({
-            Bucket: S3CLIENT_BUCKET_NAME,
-            Key: fileName
-        })
-        await s3Client.send(command)
+        try {
+            const command = new DeleteObjectCommand({
+                Bucket: S3CLIENT_BUCKET_NAME,
+                Key: fileName
+            })
+            await s3Client.send(command)
+        } catch (error) {
+            console.error(error)
+        }
     }
 }
 
