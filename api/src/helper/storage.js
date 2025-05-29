@@ -1,5 +1,3 @@
-import { supabaseBucketName, supabaseKey, supabaseUrl } from '../config/config.js'
-
 import { createReadStream } from 'fs'
 import { S3Client, DeleteObjectCommand, HeadBucketCommand, CreateBucketCommand } from '@aws-sdk/client-s3'
 import { Upload } from '@aws-sdk/lib-storage'
