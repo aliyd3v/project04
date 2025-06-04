@@ -54,7 +54,7 @@ const storage = {
                 leavePartsOnError: false
             })
             const uploaded = await upload.done()
-            return `https://${SUPABASE_PROJECT_ID}.supabase.co/storage/v1/object/public/${S3CLIENT_BUCKET_NAME}//${uploaded.Key}`
+            return `https://${SUPABASE_PROJECT_ID}.supabase.co/storage/v1/object/public/${S3CLIENT_BUCKET_NAME}/${uploaded.Key}`
         } catch (error) {
             throw error
         }

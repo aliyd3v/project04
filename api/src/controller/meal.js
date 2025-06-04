@@ -112,6 +112,7 @@ active, is_ready_product, created_at;`
                 }
             })
         } catch (error) {
+            console.log(error)
             next(error)
         }
     },
