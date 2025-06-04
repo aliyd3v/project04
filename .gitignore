@@ -1,4 +1,8 @@
 /api/node_modules
 /api/.env
+<<<<<<< HEAD
 /api/src/helper/tmp
 .vscode
+=======
+/api/src/helper/tmp
+>>>>>>> 5aa87ca (mealController method createOne is fixed.)
