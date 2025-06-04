@@ -4,6 +4,7 @@ import fs from 'fs'
 import { fileURLToPath } from 'url'
 import path from 'path'
 
+<<<<<<< HEAD
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 if (!fs.existsSync(path.join(__dirname, 'tmp'))) fs.mkdirSync(path.join(__dirname, 'tmp'))
@@ -15,6 +16,18 @@ const storage = multer.diskStorage({
 
 const upload = multer({
     storage,
+=======
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        if (!fs.existsSync(path.resolve(__dirname, 'tmp'))) {
+            fs.mkdirSync(path.resolve(__dirname, 'tmp'))
+        }
+        cb(null, path.resolve(__dirname, 'tmp'));
+    },
+>>>>>>> 4224f3d (mealController method createOne is fixed.)
     fileFilter: (req, file, cb) => {
         if (
             file.mimetype == "image/jpeg" || file.mimetype == "image/png" ||
