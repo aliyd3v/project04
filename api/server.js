@@ -1,7 +1,7 @@
 import http from 'http'
+import { Server } from 'socket.io'
 import app from './app.js'
 import { port } from './src/config/config.js'
-import { Server } from 'socket.io'
 import registerSocketHandler from './socket/index.js'
 
 // Setup server.

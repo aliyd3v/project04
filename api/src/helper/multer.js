@@ -1,9 +1,18 @@
 import multer from 'multer'
 import AppError from '../utils/appError.js'
+import fs from 'fs'
+import { fileURLToPath } from 'url'
+import path from 'path'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'tmp/');
+        if (!fs.existsSync(path.resolve(__dirname, 'tmp'))) {
+            fs.mkdirSync(path.resolve(__dirname, 'tmp'))
+        }
+        cb(null, path.resolve(__dirname, 'tmp'));
     },
     fileFilter: (req, file, cb) => {
         if (

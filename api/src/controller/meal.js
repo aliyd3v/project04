@@ -70,17 +70,7 @@ const mealController = {
             }
             let imageUrl = null
             if (req.file) {
-                const { errUpload, data } = await storage.upload(req.file.filename, req.file.path)
-                if (errUpload) {
-                    fs.unlinkSync(req.file.path)
-                    return next(
-                        new AppError(500, 'fail', 'Uploading is failed! Please try again later.'),
-                        req,
-                        res,
-                        next
-                    )
-                }
-                imageUrl = data.publicUrl
+                imageUrl = await storage.upload(req.file.filename, req.file.path)
             }
             const insertQuery = req.file ? `INSERT INTO meals
 (name, price, category_id, active, image_url, image_name, is_ready_product)

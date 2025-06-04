@@ -19,6 +19,8 @@
   "homepage": "https://github.com/aliyd3v/project07#readme",
   "description": "",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.817.0",
+    "@aws-sdk/lib-storage": "^3.817.0",
     "@supabase/supabase-js": "^2.49.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",

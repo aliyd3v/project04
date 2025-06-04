@@ -11,7 +11,7 @@ app
     // Setup body parsing.
     .use(express.json())
     .use(express.urlencoded({ extended: true }))
-    .use(cors())
+    .use(cors({ origin: '*' }))
     .use(helmet())
 
     // Setup Router.
