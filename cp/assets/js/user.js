@@ -6,6 +6,7 @@ const updateForm = document.getElementById('update-form')
 const updatePassForm = document.getElementById('update-pass-form')
 let Users = []
 
+document.querySelector(".progress-loader").classList.add("active");
 // Getting users with fetch.
 async function getUsers() {
     try {
@@ -14,6 +15,7 @@ async function getUsers() {
         })
         const res = await response.json();
         if (res.status != 'success') {
+            document.querySelector(".progress-loader").classList.remove("active");
             alert(res.message)
         } else {
             Users = res.data.users
@@ -39,6 +41,7 @@ function renderUsers(Users) {
             <button onclick="openDeletePopup('${el.id}', '${el.name}', '${el.username}', '${el.role}', '${el.gender}')">Delete</button></div>`;
 
         userBox.appendChild(userItem)
+        document.querySelector(".progress-loader").classList.remove("active");
     })
 }
 

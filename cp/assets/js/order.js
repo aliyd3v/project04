@@ -1,3 +1,4 @@
+// import { receiptLogo } from "../icons/myCafe-dark.png"
 const url = 'https://api.aif.uz'
 const socket = io(url)
 const token = localStorage.getItem('token')
@@ -8,6 +9,7 @@ let orderTimesArr = []
 const delPopup = document.querySelector('.del-popup')
 const closeDelPopup = document.getElementById('close-del-btn')
 const deleteOrderBtn = document.getElementById('order-del-btn')
+
 
 function getOrders() {
     socket.emit('get-orders', { token })
@@ -34,17 +36,30 @@ socket.on('orders', ({ orders }) => {
     renderOrders(Orders)
 })
 
+document.querySelector(".progress-loader").classList.add("active");
+
 function renderOrders(Orders) {
     ordersDiv.innerHTML = ''
     Orders.forEach(order => {
         const div = document.createElement('div')
         div.classList.add('order')
-        div.style = 'border: 1px solid black;'
         div.innerHTML = `
+
         <div class="table">
-            <div>Table ${order.table.number}</div>
-            <div id="order-${order.id}"></div>
-            <div><button class="del-btn" onclick="openDelPopup(${order.id})">DEL</button></div>
+            <div class="table-header">
+                <h2>MY CAFE</h2>
+                <p>Mehmonimiz bo‘lganingiz uchun tashakkur!</p>
+            </div>
+            <div class="order-number">
+                ID #2546453
+            </div>
+            <div class="table-number">
+                Table ${order.table.number}
+            </div>
+            <div class="order-timer">
+                <p id="order-${order.id}"></p>
+                <p>dan beri</p>
+            </div>
         </div>`
         let totalPrice = 0;
         const products = document.createElement('div')
@@ -53,7 +68,7 @@ function renderOrders(Orders) {
             let orderItemStatus
             let color
             if (meal.status == 'Pending' && !meal.meal.is_ready_product) {
-                orderItemStatus = 'fa-fire'
+                orderItemStatus = 'fa-cauldron'
                 color = 'yellow'
             } else if (meal.status == 'Pending' && meal.meal.is_ready_product) {
                 orderItemStatus = 'fa-person-running-fast'
@@ -66,19 +81,40 @@ function renderOrders(Orders) {
                 color = 'green'
             }
             products.innerHTML += `
-                <div class="">
-                    <div><img src="${meal.meal.image_url}" style="max-height: 50px;" alt="${meal.meal.name}"></img></div>
-                    <div>${meal.quantity}</div>
-                    <div>${meal.meal.name}</div>
+                <div class="meals-list">
+                
+                <div class="meal-name">
+                    <i class="fa-regular ${orderItemStatus} ${color}"></i>
+                    ${meal.meal.name}
                 </div>
-                <div class="product-status">
-                    <div><i class="fas ${orderItemStatus} ${color}"></i></i></div>
-                </div>`
+                <div class="meal-quantity">x${meal.quantity} </div>
+                </div>
+            `
             totalPrice += meal.quantity * meal.meal.price
         })
-        const totalPriceDiv = document.createElement('div')
-        totalPriceDiv.classList.add('total-price-div')
-        totalPriceDiv.innerHTML = `<div>Total price:</div><div>${totalPrice} so'm</div>`
+        const totalPriceDiv = document.createElement('div');
+        totalPriceDiv.classList.add('total-price-div');
+        totalPriceDiv.innerHTML = `
+            <div class="price-tag">Jami:
+                <span>${totalPrice} so'm</span>
+            </div>
+            <div class="button-box">
+
+                <button class="del-btn">
+                    <i class="fa-regular fa-list"></i>
+                </button>
+
+                <button class="del-btn" onclick="openDelPopup(${order.id})">
+                    <i class="fa-regular fa-hand"></i>
+                </button>
+
+                <button class="del-btn">
+                    <i class="fa-regular fa-badge-check"></i>
+                </button>
+
+            </div>
+        `
+
         products.appendChild(totalPriceDiv)
         div.appendChild(products)
         ordersDiv.appendChild(div)
@@ -88,7 +124,9 @@ function renderOrders(Orders) {
         })
     });
     timeShower()
+    document.querySelector(".progress-loader").classList.remove("active");
 }
+
 
 function timeShower() {
     const now = new Date()

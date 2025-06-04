@@ -4,10 +4,11 @@ const tablesBox = document.querySelector('.table-box')
 const createForm = document.getElementById('create-form')
 const updateForm = document.getElementById('update-form')
 
-
+document.querySelector(".progress-loader").classList.add("active");
 socket.emit('get-tables', { token })
 socket.on('tables', ({ tables, error }) => {
     if (error) {
+        document.querySelector(".progress-loader").classList.remove("active");
         alert('Failed to get meals: ' + (error.message || error))
         return;
     }
@@ -15,15 +16,19 @@ socket.on('tables', ({ tables, error }) => {
     tables.forEach(el => {
         const tableItem = document.createElement("div");
 
-        tableItem.style = 'display: flex; justify-content: space-between;'
+        tableItem.className = "table";
 
-        tableItem.className = "category";
-
-        tableItem.innerHTML = `<h3>${el.number}</h3> 
-        <div><button onclick="openUpdateModal('${el.id}', '${el.number}')">Update</button>
-        <button onclick="openDeletePopup('${el.id}', '${el.number}')">Delete</button></div>`;
+        tableItem.innerHTML = `
+            <h3>${el.number}</h3> 
+            <div>
+                <button class="update-btn" onclick="openUpdateModal('${el.id}', '${el.number}')">Tahrirlash</button>
+                <button class="delete-btn" onclick="openDeletePopup('${el.id}', '${el.number}')">O'chirish</button>
+            </div>
+        `;
 
         tablesBox.appendChild(tableItem)
+        document.querySelector(".progress-loader").classList.remove("active");
+
     })
 })
 

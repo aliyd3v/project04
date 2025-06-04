@@ -64,6 +64,9 @@
             </nav>
         </div>
         <div class="dashboard-cont">
+            <div class="progress-loader">
+                <span class="loader"></span>
+            </div>
             <header class="header">
                 <div class="container">
                     <div class="header-cont">
@@ -76,45 +79,47 @@
                     </div>
                 </div>
             </header>
-            <section class="food-cont">
+            <section class="content">
                 <div class="container">
                     <div id="create" style="display: none;">
                         <div class="section-header">
-                            <h2 class="section-title">Create category</h2>
+                            <h2 class="section-title">Kategoriya qo'shish</h2>
                         </div>
                         <div class="form-box">
                             <form id="create-form">
-
-                                <label for="name">Input name</label>
-                                <input type="text" name="name" id="name-in-create" required> <br>
-
-                                <label for="active">Active?</label>
-                                <select name="active" id="active-in-create">
-                                    <option value="0">No</option>
-                                    <option value="1">Yes</option>
-                                </select><br>
-
-                                <button type="button" onclick="closeCreateModal()">Cancel</button>
-                                <button type="submit">Create</button>
+                                <div>
+                                    <label for="name">Kategoriya nomi:</label>
+                                    <input type="text" name="name" id="name-in-create" required> <br>
+                                </div>
+                                <div>
+                                    <label for="active">Faolmi?</label>
+                                    <select name="active" id="active-in-create">
+                                        <option value="0">Yo'q</option>
+                                        <option value="1">Ha</option>
+                                    </select><br>
+                                </div>
+                                <button type="button" onclick="closeCreateModal()">Bekor qilish</button>
+                                <button type="submit">Qo'shish</button>
                             </form>
                         </div>
                     </div>
                     <div id="update" style="display: none;">
                         <div class="section-header">
-                            <h2 class="section-title">Update category</h2>
+                            <h2 class="section-title">Kategoriyani tahrirlash</h2>
                         </div>
                         <div class="form-box">
                             <div style="display: none;" id="updating-category-data-id"></div>
                             <form id="update-form">
-
-                                <label for="name">Input name</label>
-                                <input type="text" name="name" id="name-in-update" required> <br>
-
-                                <label for="active">Active?</label>
-                                <select name="active" id="active-in-update"></select><br>
-
-                                <button type="button" onclick="closeUpdateModal()">Cancel</button>
-                                <button type="submit">Update</button>
+                                <div>
+                                    <label for="name">Kategoriya nomi:</label>
+                                    <input type="text" name="name" id="name-in-update" required> <br>
+                                </div>
+                                <div>
+                                    <label for="active">Faolmi?</label>
+                                    <select name="active" id="active-in-update"></select><br>
+                                </div>
+                                <button type="button" onclick="closeUpdateModal()">Bekor qilish</button>
+                                <button type="submit">Saqlash</button>
                             </form>
                         </div>
                     </div>
@@ -130,9 +135,8 @@
                             <!-- bu yerda JS yordamida Kategoriyalar yig'iladi -->
                         </div>
                     </div>
-                    <div class="del-popup"
-                        style="position: fixed; top: 35%; left: 40%; background-color: green;height: 200px; width: 400px; display: none; justify-content: center; align-items: center; flex-wrap: wrap;">
-                    </div>
+                    <div class="del-popup category-del-popup"></div>
+                    <div class="del-popup-background" onclick="closeDeletePopup()"></div>
                 </div>
             </section>
         </div>

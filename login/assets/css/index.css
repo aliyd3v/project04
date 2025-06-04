@@ -24,9 +24,134 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: top;
-    position: relative;
     backdrop-filter: brightness(80%);
     padding-inline: 25px;
+    position: relative;
+}
+
+#pagePreloader,
+.progress-loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffffc8;
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    & .loader {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: inline-block;
+        position: relative;
+        border: 6px solid;
+        border-color: var(--primary) var(--primary) transparent;
+        box-sizing: border-box;
+        animation: rotation 400ms linear infinite;
+    }
+
+    & .loader::after {
+        content: '';
+        box-sizing: border-box;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        border: 6px solid;
+        border-color: transparent var(--primary) var(--primary);
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        animation: rotationBack 200ms linear infinite;
+        transform-origin: center center;
+    }
+}
+
+#pagePreloader {
+    background-color: white;
+
+    & p {
+        font-size: 36px;
+        font-weight: 600;
+        margin-left: 15px;
+    }
+}
+
+#pagePreloader.active,
+.progress-loader.active {
+    display: flex;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rotationBack {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(-360deg);
+    }
+}
+
+.error-alert {
+    position: fixed;
+    top: -100%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 18px 20px;
+    background-color: white;
+    border-radius: 14px;
+    transition: 450ms;
+
+    & div {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+
+        & i {
+            font-size: 44px;
+            color: red;
+        }
+
+        & h3 {
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        & button {
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            aspect-ratio: 1 / 1;
+            background-color: red;
+            color: white;
+            
+            & i {
+                font-size: 18px;
+                color: white;
+            }
+        }
+    }
+}
+
+.error-alert.error {
+    top: 10%;
+    transition: 450ms;
 }
 
 .form-popup {
@@ -89,6 +214,7 @@ body {
         justify-content: center;
         align-items: center;
     }
+
     .form-popup {
         position: static;
         background-color: rgba(255, 255, 255, 0.7);

@@ -7,12 +7,16 @@ let Categories = [];
 
 
 // Products getting and render functions.
+document.querySelector(".progress-loader").classList.add("active");
+
 socket.emit('get-meals', { token });
 socket.on('meals', ({ meals, error }) => {
+    document.querySelector(".progress-loader").classList.remove("active");
     if (error) {
         alert('Failed to get meals: ' + (error?.message || error))
         return;
     }
+
     productsBox.innerHTML = '';
     meals.forEach(el => {
         const product = document.createElement("tr");
@@ -27,11 +31,14 @@ socket.on('meals', ({ meals, error }) => {
             <td class="product-price">
                 <p>${el.price} so'm</p>
             </td>
+            <td class="product-category">
+                <p>${el.category_name}</p>
+            </td>
             <td class="is-ready-meal">
                 <p>${el.is_ready_product ? "Ha" : "Yo'q"}</p>
             </td>
             <td class="is-active-meal">
-                <p>${el.active ? "Ha" : "Yo'q"}</p>
+                <p>${el.active ? "Faol" : "Faol emas"}</p>
             </td>
             <td class="product-actions">
                 <button class="update-btn" onclick="openUpdateModal('${el.id}', '${el.name}', '${el.price}', '${el.image_url}', '${el.category_id}', '${el.category_name}', '${el.active}', '${el.is_ready_product}')">
@@ -100,19 +107,19 @@ function openUpdateModal(id, name, price, image_url, category_id, category_name,
     if (is_ready_product === 'true') {
         const optionYes = document.createElement('option')
         optionYes.value = 1
-        optionYes.textContent = 'Yes'
+        optionYes.textContent = 'Ha'
         const optionNo = document.createElement('option')
         optionNo.value = 0
-        optionNo.textContent = 'No'
+        optionNo.textContent = 'Yo\'q'
         document.getElementById('is_ready_product-in-update').appendChild(optionYes)
         document.getElementById('is_ready_product-in-update').appendChild(optionNo)
     } else {
         const optionNo = document.createElement('option')
         optionNo.value = 0
-        optionNo.textContent = 'No'
+        optionNo.textContent = 'Yo\'q'
         const optionYes = document.createElement('option')
         optionYes.value = 1
-        optionYes.textContent = 'Yes'
+        optionYes.textContent = 'Ha'
         document.getElementById('is_ready_product-in-update').appendChild(optionNo)
         document.getElementById('is_ready_product-in-update').appendChild(optionYes)
     }
@@ -120,19 +127,19 @@ function openUpdateModal(id, name, price, image_url, category_id, category_name,
     if (active === 'true') {
         const optionYes = document.createElement('option')
         optionYes.value = 1
-        optionYes.textContent = 'Yes'
+        optionYes.textContent = 'Faol'
         const optionNo = document.createElement('option')
         optionNo.value = 0
-        optionNo.textContent = 'No'
+        optionNo.textContent = 'Faol emas'
         document.getElementById('active-in-update').appendChild(optionYes)
         document.getElementById('active-in-update').appendChild(optionNo)
     } else {
         const optionNo = document.createElement('option')
         optionNo.value = 0
-        optionNo.textContent = 'No'
+        optionNo.textContent = 'Faol emas'
         const optionYes = document.createElement('option')
         optionYes.value = 1
-        optionYes.textContent = 'Yes'
+        optionYes.textContent = 'Faol'
         document.getElementById('active-in-update').appendChild(optionNo)
         document.getElementById('active-in-update').appendChild(optionYes)
     }
@@ -147,7 +154,6 @@ function closeUpdateModal() {
 
 // Open and close functions for delete popup.
 function openDeletePopup(id, name, price, image_url, category_id, category_name, active, is_ready_product) {
-    document.querySelector('.del-popup').style.display = 'flex';
     document.querySelector('.del-popup-background').classList.add("active");
     document.querySelector('.del-popup').classList.add("active");
     document.querySelector('.del-popup').dataset.id = id;
@@ -179,6 +185,7 @@ function closeDeletePopup() {
 // Create product fetch function.
 createForm.addEventListener('submit', async e => {
     e.preventDefault();
+    document.querySelector(".progress-loader").classList.add("active");
     const formData = new FormData();
     formData.append('name', document.getElementById('name-in-create').value);
     formData.append('price', document.getElementById('price-in-create').value);
@@ -193,13 +200,16 @@ createForm.addEventListener('submit', async e => {
         });
         const res = await response.json();
         if (!response.ok) {
+            document.querySelector(".progress-loader").classList.remove("active");
             alert('Failed to create meal: ' + (res.message || 'Unknown error'));
         } else {
             closeCreateModal()
             if (res.data.meal.active) { socket.emit('update-menu') }
             socket.emit('get-meals', { token });
+            document.querySelector(".progress-loader").classList.remove("active");
         }
     } catch (error) {
+        document.querySelector(".progress-loader").classList.remove("active");
         alert('Error: ' + error.message);
     }
 })
@@ -207,6 +217,7 @@ createForm.addEventListener('submit', async e => {
 // Update product fetch function.
 updateForm.addEventListener('submit', async e => {
     e.preventDefault();
+    document.querySelector(".progress-loader").classList.add("active");
     const formData = new FormData();
     formData.append('name', document.getElementById('name-in-update').value);
     formData.append('price', document.getElementById('price-in-update').value);
@@ -227,6 +238,8 @@ updateForm.addEventListener('submit', async e => {
             closeUpdateModal()
             if (res.data.meal.active) { socket.emit('update-menu') }
             socket.emit('get-meals', { token });
+            document.querySelector(".progress-loader").classList.remove("active");
+
         }
     } catch (error) {
         alert('Error: ' + error.message);
@@ -235,7 +248,8 @@ updateForm.addEventListener('submit', async e => {
 
 // Delete product fetch function.
 async function deleteProduct() {
-    const id = document.querySelector('.del-popup').dataset.id
+    const id = document.querySelector('.del-popup').dataset.id;
+    document.querySelector(".progress-loader").classList.add("active");
     try {
         const response = await fetch(`https://api.aif.uz/meal/${id}`, {
             method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` }
@@ -245,6 +259,7 @@ async function deleteProduct() {
         closeDeletePopup();
         socket.emit('update-menu')
         socket.emit('get-meals', { token });
+        document.querySelector(".progress-loader").classList.remove("active");
     } catch (error) {
         console.error(error)
     }

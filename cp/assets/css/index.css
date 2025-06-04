@@ -1,8 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Michroma:regular');
+@import url('https://fonts.googleapis.com/css?family=Doto:100,200,300,regular,500,600,700,800,900');
 
 :root {
     --primary: #74512D;
-    --secondary: #FFFDF6;
+    --secondary: #fff;
     --title-color: #2b2b2b;
     --font: "Sansation";
 }
@@ -46,7 +48,7 @@ button {
     position: sticky;
     top: 0;
     left: 0;
-    width: 23%;
+    width: 20%;
     height: 100vh;
     background-color: var(--primary);
     padding: 24px 0;
@@ -99,8 +101,76 @@ button {
 }
 
 .dashboard-cont {
-    width: 77%;
+    position: relative;
+    width: 80%;
     height: 100%;
+}
+
+.progress-loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffffc8;
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    & .loader {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: inline-block;
+        position: relative;
+        border: 6px solid;
+        border-color: var(--primary) var(--primary) transparent;
+        box-sizing: border-box;
+        animation: rotation 400ms linear infinite;
+    }
+
+    & .loader::after {
+        content: '';
+        box-sizing: border-box;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        border: 6px solid;
+        border-color: transparent var(--primary) var(--primary);
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        animation: rotationBack 200ms linear infinite;
+        transform-origin: center center;
+    }
+}
+
+.progress-loader.active {
+    display: flex;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rotationBack {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(-360deg);
+    }
 }
 
 .header {
@@ -109,6 +179,7 @@ button {
     align-items: center;
     justify-content: space-between;
     padding-inline: 24px;
+    background-color: var(--secondary);
 }
 
 .header-container {
@@ -131,18 +202,20 @@ button {
     }
 }
 
-.food-cont {
+.content {
     height: 90vh;
-    background-color: var(--secondary);
+    background-color: white;
     overflow-y: scroll;
     padding-block: 0 20px;
 }
 
 .section-header {
+    margin-block: 20px;
     display: flex;
     align-items: center;
+    justify-content: center;
     justify-content: space-between;
-    margin-bottom: 30px;
+    background-color: white;
 
     & .section-title {
         font-size: 36px;
@@ -176,10 +249,16 @@ button {
 
         & th {
             text-align: left;
-            display: block;
+            display: flex;
+            width: 100%;
+            align-items: center;
             padding: 0 15px 0;
             grid-row: 1 / span 1;
 
+            & span {
+                display: inline-block;
+                width: 100%;
+            }
         }
 
         & th:nth-child(1) {
@@ -197,15 +276,19 @@ button {
 
         & th:nth-child(4) {
             grid-column: 8 / span 2;
-            text-align: center;
         }
 
         & th:nth-child(5) {
-            grid-column: 10 / span 2;
+            grid-column: 10 / span 1;
             text-align: center;
         }
 
         & th:nth-child(6) {
+            grid-column: 11 / span 1;
+            text-align: center;
+        }
+
+        & th:nth-child(7) {
             grid-column: 12 / span 2;
             text-align: center;
         }
@@ -251,8 +334,12 @@ button {
         grid-column: 6 / span 2;
     }
 
-    & .is-ready-meal {
+    & .product-category {
         grid-column: 8 / span 2;
+    }
+
+    & .is-ready-meal {
+        grid-column: 10 / span 1;
 
         & p {
             width: 100%;
@@ -261,7 +348,7 @@ button {
     }
 
     & .is-active-meal {
-        grid-column: 10 / span 2;
+        grid-column: 11 / span 1;
 
         & p {
             width: 100%;
@@ -444,13 +531,14 @@ button {
         justify-content: center;
         align-items: center;
         gap: 20px;
-        
+
         & button:nth-child(1) {
             border: none;
             border-radius: 10px;
             background-color: red;
             padding: 10px 24px;
             color: white;
+            pointer-events: auto;
         }
 
         & button:nth-child(2) {
@@ -459,12 +547,20 @@ button {
             background-color: forestgreen;
             padding: 10px 24px;
             color: white;
+            pointer-events: auto;
         }
     }
 }
 
 .del-popup.active {
     animation: 150ms zooming linear forwards;
+}
+
+.category-del-popup {
+    & .del-name p {
+        font-size: 28px;
+        margin-block: 20px;
+    }
 }
 
 @keyframes zooming {
@@ -484,11 +580,232 @@ button {
     border-radius: 20px;
     padding: 20px;
     margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
 
-    & h3 {
+    & div {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    & div h3 {
         font-size: 24px;
         font-weight: 700;
         color: var(--title-color);
+    }
+
+    & div .category-action {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+
+        & p {
+            font-size: 18px;
+            font-weight: 500;
+            margin-right: 50px;
+        }
+
+        & button {
+            border: none;
+            padding: 10px 24px;
+            font-size: 18px;
+            border-radius: 16px;
+            color: white;
+        }
+
+        & .update-btn {
+            background-color: forestgreen;
+        }
+
+        & .delete-btn {
+            background-color: red;
+        }
+    }
+}
+
+.table-box {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+
+    & .table {
+        aspect-ratio: 1 / 1;
+        display: flex;
+        flex-direction: column;
+        /* align-items: center; */
+        justify-content: space-between;
+        gap: 50px;
+        border: 3px solid var(--primary);
+        border-radius: 20px;
+        padding: 16px;
+        background-image: url('../images/table-background.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+
+        & h3 {
+            font-family: "Michroma";
+            font-size: 50px;
+            font-weight: 700;
+            line-height: 60px;
+            align-self: self-end;
+        }
+
+        & div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            & button {
+                width: 50%;
+                display: block;
+                border: none;
+                padding: 10px 16px;
+                font-size: 17px;
+                color: white;
+            }
+
+            & .update-btn {
+                border-radius: 20px 0 0 20px;
+                background-color: forestgreen;
+            }
+
+            & .delete-btn {
+                border-radius: 0 20px 20px 0;
+                background-color: red;
+            }
+        }
+    }
+}
+
+#orders-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.order {
+    box-shadow: 0px 3px 8px 0 rgba(0, 0, 0, 0.4);
+    border-top: 0.5px dashed var(--title-color);
+    border-bottom: 0.5px dashed var(--title-color);
+    padding: 36px 22px 16px;
+    font-family: "Courier New";
+    font-weight: 400;
+
+    & div {
+        margin-bottom: 10px;
+        font-size: 20px;
+        color: #000;
+    }
+
+    & .table {
+        & .table-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+
+            & h2 {
+                font-family: var(--font);
+                font-weight: 900;
+                margin-top: 20px;
+                margin-bottom: 8px;
+            }
+
+            & p {
+                font-family: var(--font);
+                font-weight: 400;
+                font-size: 14px;
+                text-align: center;
+            }
+        }
+
+        & .table-number {
+            text-align: center;
+            font-size: 22px;
+        }
+
+        & .order-number {
+            text-align: center;
+        }
+
+        & .order-timer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+
+            & p {
+                margin-left: 10px;
+            }
+        }
+    }
+
+    & .products {
+        & .meals-list {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+
+            & .meal-name,
+            & .meal-quantity {
+                font-size: 18px;
+                margin: 0;
+            }
+        }
+    }
+
+    & .total-price-div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 25px;
+        padding-top: 10px;
+        border-top: 3.2px dotted var(--title-color);
+
+        & .price-tag {
+            margin-bottom: 20px;
+            & span {
+                font-size: 20px;
+                font-weight: 600;
+            }
+        }
+
+        & .button-box {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+
+            & button {
+                display: block;
+                border: none;
+                border-radius: 14px;
+                width: 45px;
+                aspect-ratio: 1 / 1;
+                margin: 0 auto;
+                color: white;
+                font-size: 22px;
+                font-weight: 400;
+            }
+
+            & button:nth-child(1) {
+                background-color: var(--title-color);
+                /* background-color: var(--primary); */
+            }
+
+            & button:nth-child(2) {
+                background-color: red;
+            }
+
+            & button:nth-child(3) {
+                background-color: forestgreen;
+            }
+        }
     }
 }
 

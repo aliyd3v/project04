@@ -64,6 +64,9 @@
             </nav>
         </div>
         <div class="dashboard-cont">
+            <div class="progress-loader">
+                <span class="loader"></span>
+            </div>
             <header class="header">
                 <div class="container">
                     <div class="header-cont">
@@ -76,7 +79,7 @@
                     </div>
                 </div>
             </header>
-            <section class="food-cont">
+            <section class="content">
                 <div class="container">
                     <div id="create" style="display: none;">
                         <div class="section-header">
@@ -101,7 +104,7 @@
                                 </div>
 
                                 <div>
-                                    <label for="is_ready_product">Taom tayyor holatda bo'ladimi?</label>
+                                    <label for="is_ready_product">Taom tayyormi?</label>
                                     <select name="is_ready_product" id="is_ready_product-in-create">
                                         <option value="0">Yo'q</option>
                                         <option value="1">Ha</option>
@@ -109,10 +112,10 @@
                                 </div>
 
                                 <div>
-                                    <label for="active">Sotuvga tayyormi?</label>
+                                    <label for="active">Holati?</label>
                                     <select name="active" id="active-in-create">
-                                        <option value="0">Yo'q</option>
-                                        <option value="1">Ha</option>
+                                        <option value="0">Faol emas</option>
+                                        <option value="1">Faol</option>
                                     </select><br>
                                 </div>
 
@@ -155,7 +158,7 @@
                                 </div>
 
                                 <div>
-                                    <label for="active">Sotuvga tayyormi?</label>
+                                    <label for="active">Holati?</label>
                                     <select name="active" id="active-in-update"></select><br>
                                 </div>
 
@@ -180,12 +183,13 @@
                         <table>
                             <thead class="products-table-header">
                                 <tr>
-                                    <th class="product-table-header-item">Rasm</th>   
-                                    <th class="product-table-header-item">Nomi</th>
-                                    <th class="product-table-header-item">Narxi</th>
-                                    <th class="product-table-header-item">Sotuvga tayyormi?</th>
-                                    <th class="product-table-header-item">Taom aktivmi?</th>
-                                    <th class="product-table-header-item">Amallar</th>
+                                    <th class="product-table-header-item"><span>Rasm</span></th>   
+                                    <th class="product-table-header-item"><span>Nomi</span></th>
+                                    <th class="product-table-header-item"><span>Narxi</span></th>
+                                    <th class="product-table-header-item"><span>Kategoriyasi</span></th>
+                                    <th class="product-table-header-item"><span>Taom tayyormi?</span></th>
+                                    <th class="product-table-header-item"><span>Holati?</span></th>
+                                    <th class="product-table-header-item"><span>Amallar</span></th>
                                 </tr>
                             </thead>
                             <tbody class="products-box"></tbody>
