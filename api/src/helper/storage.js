@@ -67,7 +67,7 @@ const storage = {
             })
             await s3Client.send(command)
         } catch (error) {
-            console.error(error)
+            throw error
         }
     }
 }
