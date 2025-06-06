@@ -110,7 +110,7 @@ export const fileSchema = Joi.object({
     originalname: Joi.string().regex(/\.(jpg|jpeg|png|gif)$/i).required(),
 
     mimetype: Joi.string()
-        .valid("image/jpeg", "image/png", "image/gif")
+        .valid("image/jpeg", "image/png", "image/gif", "image/webp")
         .required(),
 
     size: Joi.number().max(2 * 1024 * 1024).required(),
