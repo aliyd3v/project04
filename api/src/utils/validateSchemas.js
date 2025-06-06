@@ -107,7 +107,7 @@ export const updateCategorySchema = Joi.object({
 })
 
 export const fileSchema = Joi.object({
-    originalname: Joi.string().regex(/\.(jpg|jpeg|png|gif)$/i).required(),
+    originalname: Joi.string().regex(/\.(jpg|jpeg|png|gif|webp)$/i).required(),
 
     mimetype: Joi.string()
         .valid("image/jpeg", "image/png", "image/gif", "image/webp")
