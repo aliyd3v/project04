@@ -193,7 +193,7 @@ ORDER BY meals.name ASC;`
                     )
                 }
             }
-            const meal = await pg.query(`SELECT id, category_id FROM meals WHERE id = $1;`, [id])
+            const meal = await pg.query(`SELECT id, category_id, image_name FROM meals WHERE id = $1;`, [id])
             if (!meal.rowCount) {
                 req.file ? fs.unlinkSync(req.file.path) : false
                 return next(
@@ -203,7 +203,7 @@ ORDER BY meals.name ASC;`
                     next
                 )
             }
-            if (meal.category_id != body.category_id) {
+            if (meal.rows[0].category_id !== body.category_id) {
                 const category = await pg.query(
                     `SELECT id, name FROM categories WHERE id = $1;`,
                     [body.category_id]
@@ -224,8 +224,8 @@ ORDER BY meals.name ASC;`
             }
             let imageUrl = null
             if (req.file) {
-                await storage.delete(meal.rows[0].file_name)
                 imageUrl = await storage.upload(req.file.filename, req.file.path)
+                storage.delete(meal.rows[0].image_name)
             }
             const updateQuery = req.file ? `UPDATE meals
 SET name = $1, price = $2, category_id = $3, active = $4, 
@@ -271,7 +271,6 @@ active, image_url, is_ready_product, created_at, updated_at;`
                 }
             })
         } catch (error) {
-            console.log(error)
             next(error)
         }
     },
@@ -279,7 +278,7 @@ active, image_url, is_ready_product, created_at, updated_at;`
         const { params: { id } } = req
         try {
             const meal = await pg.query(
-                `SELECT id FROM meals WHERE id = $1;`,
+                `SELECT id, image_name FROM meals WHERE id = $1;`,
                 [id]
             )
             if (!meal.rowCount) {
@@ -290,7 +289,7 @@ active, image_url, is_ready_product, created_at, updated_at;`
                     next
                 )
             }
-            await storage.delete(meal.rows[0].image_name)
+            storage.delete(meal.rows[0].image_name)
             const deleteQuery = `DELETE FROM meals WHERE id = $1;`
             const values = [id]
             await pg.query(deleteQuery, values)
