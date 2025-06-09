@@ -3,8 +3,9 @@
 @import url('https://fonts.googleapis.com/css?family=Doto:100,200,300,regular,500,600,700,800,900');
 
 :root {
-    --primary: #74512D;
+    --primary: #8A784E;
     --secondary: #fff;
+    --gradient1: radial-gradient(circle,rgba(167, 146, 119, 1) 0%, rgba(138, 120, 78, 1) 100%);
     --title-color: #2b2b2b;
     --font: "Sansation";
 }
@@ -21,12 +22,20 @@
 body {
     overflow-x: hidden;
     font-family: var(--font);
+    background-image: url("../images/kitchen-table-image.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
 a,
 button {
     font-family: var(--font);
     cursor: pointer;
+}
+
+table {
+    border-collapse: collapse;
 }
 
 .container {
@@ -36,11 +45,23 @@ button {
     padding: 0 20px;
 }
 
+.button {
+    min-width: 250px;
+    border: none;
+    border-radius: 16px;
+    background-color: var(--primary);
+    color: var(--secondary);
+    padding: 10px 24px;
+    font-size: 16px;
+    font-family: var(--font);
+}
+
 .viewport {
     width: 100vw;
     height: 100vh;
     display: flex;
     align-items: stretch;
+    background-color: rgba(0, 0, 0, 0.4);
 
 }
 
@@ -50,8 +71,8 @@ button {
     left: 0;
     width: 20%;
     height: 100vh;
-    background-color: var(--primary);
     padding: 24px 0;
+    backdrop-filter: brightness(60%);
 }
 
 .side-bar .logo {
@@ -107,13 +128,13 @@ button {
 }
 
 .progress-loader {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 1000;
     width: 100%;
     height: 100%;
-    background-color: #ffffffc8;
+    background-color: rgba(0, 0, 0, 0.6);
     display: none;
     align-items: center;
     justify-content: center;
@@ -125,7 +146,7 @@ button {
         display: inline-block;
         position: relative;
         border: 6px solid;
-        border-color: var(--primary) var(--primary) transparent;
+        border-color: var(--secondary) var(--secondary) transparent;
         box-sizing: border-box;
         animation: rotation 400ms linear infinite;
     }
@@ -140,7 +161,7 @@ button {
         bottom: 0;
         margin: auto;
         border: 6px solid;
-        border-color: transparent var(--primary) var(--primary);
+        border-color: transparent var(--secondary) var(--secondary);
         width: 32px;
         height: 32px;
         border-radius: 50%;
@@ -178,12 +199,7 @@ button {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-inline: 24px;
-    background-color: var(--secondary);
-}
-
-.header-container {
-    font-size: 24px;
+    backdrop-filter: brightness(60%);
 }
 
 .header-cont {
@@ -191,56 +207,41 @@ button {
     align-items: center;
     justify-content: space-between;
 
-    & .profile-btn {
-        width: 40px;
-        height: 40px;
-        border: none;
-        border-radius: 50%;
-        background-color: var(--primary);
+    & h1 {
+        font-size: 32px;
         color: var(--secondary);
-        font-size: 24px;
+    }
+
+    & .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        & .profile-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: var(--secondary);
+            font-size: 24px;
+        }
     }
 }
 
 .content {
     height: 90vh;
-    background-color: white;
     overflow-y: scroll;
     padding-block: 0 20px;
-}
-
-.section-header {
-    margin-block: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    justify-content: space-between;
-    background-color: white;
-
-    & .section-title {
-        font-size: 36px;
-        font-weight: 500;
-        color: var(--title-color);
-
-    }
-
-    & button {
-        min-width: 250px;
-        border: none;
-        border-radius: 16px;
-        background-color: var(--primary);
-        color: white;
-        padding: 10px 24px;
-        font-size: 16px;
-        font-family: var(--font);
-    }
+    background-color: rgba(0, 0, 0, 0.18);
 }
 
 .products-table-header {
     width: 100%;
     position: sticky;
+    z-index: 10;
+    backdrop-filter: brightness(60%);
     top: 0;
-    background-color: white;
 
     & tr {
         padding: 10px 0;
@@ -254,6 +255,7 @@ button {
             align-items: center;
             padding: 0 15px 0;
             grid-row: 1 / span 1;
+            color: var(--secondary);
 
             & span {
                 display: inline-block;
@@ -296,6 +298,7 @@ button {
 }
 
 .product {
+    position: relative;
     padding: 10px 0;
     display: grid;
     grid-template-columns: repeat(13, 1fr);
@@ -307,6 +310,7 @@ button {
         align-items: center;
         padding: 0 15px 0;
         grid-row: 1 / span 1;
+        color: var(--secondary);
     }
 
     & .product-image {
@@ -390,33 +394,63 @@ button {
     }
 }
 
-.product:hover {
-    background-color: #eceae4;
+.product::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 20px);
+    height: calc(100% - 12px);
+    border-radius: 14px;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: -1;
+    transition: 400ms;
+    opacity: 0;
+}
+
+.product:hover::after {
+    transition: 400ms;
+    opacity: 1;
+}
+
+.form-header .section-title {
+    color: var(--secondary);
+    font-size: 24px;
+    font-weight: 500;
+    margin-block: 25px;
 }
 
 #create-form,
 #update-form {
-    width: 60%;
+    width: 55%;
 
     & div {
         margin-bottom: 15px;
-        display: flex;
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        grid-template-rows: repeat(1, 1fr);
         align-items: center;
         gap: 10px;
         height: 32px;
+        color: var(--secondary);
 
         & label {
+            display: block;
             font-size: 18px;
             font-weight: 500;
+            grid-column: 1 / span 2;
         }
 
         & input {
-            flex: 1;
+            display: block;
             height: 100%;
             padding: 8px 4px;
             border: 1px solid var(--primary);
             font-family: var(--font);
             font-size: 18px;
+            grid-column: 3 / span 4;
+            background-color: var(--secondary);
         }
 
         & input:focus,
@@ -427,10 +461,11 @@ button {
         }
 
         & select {
+            display: block;
             font-family: var(--font);
             font-size: 16px;
-            height: 100%;
-            flex: 1;
+            height: 32px;
+            grid-column: 3 / span 4;
         }
 
         & input[type="number"],
@@ -460,6 +495,10 @@ button {
 
     & button[type="submit"] {
         background-color: forestgreen;
+    }
+
+    & button[type="button"].change-password-btn {
+        background-color: var(--primary);
     }
 }
 
@@ -497,7 +536,7 @@ button {
 .del-popup {
     width: 40%;
     padding-block: 50px;
-    background-color: white;
+    background: var(--gradient1);
     border-radius: 20px;
     position: fixed;
     top: 50%;
@@ -511,17 +550,19 @@ button {
     justify-content: center;
     align-items: center;
     gap: 10px;
-
+    
     & .del-title h3 {
         font-size: 24px;
         font-weight: 500;
+        color: var(--secondary);
     }
-
+    
     & .del-img img {
         width: 240px;
     }
-
+    
     & .del-name p {
+        color: var(--secondary);
         font-size: 20px;
         font-weight: 700;
     }
@@ -532,7 +573,7 @@ button {
         align-items: center;
         gap: 20px;
 
-        & button:nth-child(1) {
+        & button[type="button"] {
             border: none;
             border-radius: 10px;
             background-color: red;
@@ -541,7 +582,7 @@ button {
             pointer-events: auto;
         }
 
-        & button:nth-child(2) {
+        & button[type="submit"] {
             border: none;
             border-radius: 10px;
             background-color: forestgreen;
@@ -549,6 +590,7 @@ button {
             color: white;
             pointer-events: auto;
         }
+
     }
 }
 
@@ -575,6 +617,12 @@ button {
     }
 }
 
+.category-box,
+.table-box,
+#orders-container {
+    padding-block: 25px 40px;
+}
+
 .category {
     border: 3px solid var(--primary);
     border-radius: 20px;
@@ -592,7 +640,7 @@ button {
     & div h3 {
         font-size: 24px;
         font-weight: 700;
-        color: var(--title-color);
+        color: var(--secondary);
     }
 
     & div .category-action {
@@ -605,6 +653,7 @@ button {
             font-size: 18px;
             font-weight: 500;
             margin-right: 50px;
+            color: var(--secondary);
         }
 
         & button {
@@ -625,6 +674,25 @@ button {
     }
 }
 
+.category::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.3);
+    transition: 300ms;
+    opacity: 0;
+    z-index: -1;
+    border-radius: 14px;
+}
+
+.category:hover::after {
+    opacity: 1;
+}
+
 .table-box {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -634,12 +702,12 @@ button {
         aspect-ratio: 1 / 1;
         display: flex;
         flex-direction: column;
-        /* align-items: center; */
         justify-content: space-between;
         gap: 50px;
         border: 3px solid var(--primary);
         border-radius: 20px;
         padding: 16px;
+        background-color: rgba(0, 0, 0, 0.3);
         background-image: url('../images/table-background.png');
         background-size: cover;
         background-repeat: no-repeat;
@@ -651,6 +719,7 @@ button {
             font-weight: 700;
             line-height: 60px;
             align-self: self-end;
+            color: var(--secondary);
         }
 
         & div {
@@ -693,6 +762,7 @@ button {
     padding: 36px 22px 16px;
     font-family: "Courier New";
     font-weight: 400;
+    background-color: white;
 
     & div {
         margin-bottom: 10px;
@@ -769,6 +839,7 @@ button {
 
         & .price-tag {
             margin-bottom: 20px;
+
             & span {
                 font-size: 20px;
                 font-weight: 600;
@@ -807,6 +878,17 @@ button {
             }
         }
     }
+}
+
+.user-box {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.user {
+    padding: 25px;
+    
 }
 
 @media screen and (max-width: 1024px) {

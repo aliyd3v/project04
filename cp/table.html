@@ -14,7 +14,7 @@
     <div class="viewport">
         <div class="side-bar">
             <div class="logo">
-                <img src="assets/icons/myCafe-light.png" alt="">
+                <img src="assets/icons/mycafe.png" draggable="false" alt="">
             </div>
             <nav>
                 <ul class="side-bar-nav-list">
@@ -70,8 +70,12 @@
             <header class="header">
                 <div class="container">
                     <div class="header-cont">
-                        <h1>MY CAFE</h1>
-                        <div>
+                        <h1>STOLLAR</h1>
+                        <div class="header-actions">
+                            <button onclick="openCreateModal()" class="create-btn button" id="tableCreateButton">
+                                <i class="fa-regular fa-plus"></i>
+                                Stol qo'shish
+                            </button>
                             <button class="profile-btn">
                                 <i class="fa-light fa-user"></i>
                             </button>
@@ -82,7 +86,7 @@
             <section class="content">
                 <div class="container">
                     <div id="create" style="display: none;">
-                        <div class="section-header">
+                        <div class="form-header">
                             <h2 class="section-title">Stol qo'shish</h2>
                         </div>
                         <div class="form-box">
@@ -97,7 +101,7 @@
                         </div>
                     </div>
                     <div id="update" style="display: none;">
-                        <div class="section-header">
+                        <div class="form-header">
                             <h2 class="section-title">Stolni tahrirlash</h2>
                         </div>
                         <div class="form-box">
@@ -113,13 +117,6 @@
                         </div>
                     </div>
                     <div id="tables" class="food-sects">
-                        <div class="section-header">
-                            <h2 class="section-title">Stollar</h2>
-                            <button onclick="openCreateModal()" class="create-btn" id="tableCreateButton">
-                                <i class="fa-regular fa-plus"></i>
-                                Stol qo'shish
-                            </button>
-                        </div>
                         <div class="table-box">
                             <!-- bu yerda JS yordamida Table lar yig'iladi -->
                         </div>
