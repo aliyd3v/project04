@@ -32,13 +32,18 @@ function renderUsers(Users) {
     Users.forEach(el => {
         const userItem = document.createElement("div");
 
-        userItem.style = 'display: flex; justify-content: space-between;'
+        userItem.className = "user";
 
-        userItem.className = "category";
-
-        userItem.innerHTML = `<h3>${el.name}</h3> 
-            <div><button onclick="openUpdateModal('${el.id}', '${el.name}', '${el.username}', '${el.role}', '${el.gender}')">Update</button>
-            <button onclick="openDeletePopup('${el.id}', '${el.name}', '${el.username}', '${el.role}', '${el.gender}')">Delete</button></div>`;
+        userItem.innerHTML = `
+            <div>
+            <img >
+            </div>
+            <h3>${el.name}</h3> 
+            <div>
+                <button onclick="openUpdateModal('${el.id}', '${el.name}', '${el.username}', '${el.role}', '${el.gender}')">Update</button>
+                <button onclick="openDeletePopup('${el.id}', '${el.name}', '${el.username}', '${el.role}', '${el.gender}')">Delete</button>
+            </div>
+        `;
 
         userBox.appendChild(userItem)
         document.querySelector(".progress-loader").classList.remove("active");

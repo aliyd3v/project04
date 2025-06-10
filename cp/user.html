@@ -14,7 +14,7 @@
     <div class="viewport">
         <div class="side-bar">
             <div class="logo">
-                <img src="assets/icons/myCafe-light.png" alt="">
+                <img src="assets/icons/mycafe.png" draggable="false" alt="">
             </div>
             <nav>
                 <ul class="side-bar-nav-list">
@@ -70,8 +70,12 @@
             <header class="header">
                 <div class="container">
                     <div class="header-cont">
-                        <h1>MY CAFE</h1>
-                        <div>
+                        <h1>FOYDALANUVCHILAR</h1>
+                        <div class="header-actions">
+                            <button onclick="openCreateModal()" class="create-btn button" id="userCreateButton">
+                                <i class="fa-regular fa-plus"></i>
+                                User qo'shish
+                            </button>
                             <button class="profile-btn">
                                 <i class="fa-light fa-user"></i>
                             </button>
@@ -82,37 +86,47 @@
             <section class="content">
                 <div class="container">
                     <div id="create" style="display: none;">
-                        <div class="section-header">
+                        <div class="form-header">
                             <h2 class="section-title">Create user</h2>
                         </div>
                         <div class="form-box">
                             <form id="create-form">
 
-                                <label for="name">Input name</label>
-                                <input type="text" name="name" id="name-in-create" required> <br>
+                                <div>
+                                    <label for="name">Input name</label>
+                                    <input type="text" name="name" id="name-in-create" required>
+                                </div>
 
-                                <label for="username">Input username</label>
-                                <input type="text" name="username" id="username-in-create" required> <br>
+                                <div>
+                                    <label for="username">Input username</label>
+                                    <input type="text" name="username" id="username-in-create" required>
+                                </div>
 
-                                <label for="password">Input password</label>
-                                <input type="password" name="password" id="password-in-create" required> <br>
+                                <div>
+                                    <label for="password">Input password</label>
+                                    <input type="password" name="password" id="password-in-create" required>
+                                </div>
 
-                                <label for="role">Select role</label>
-                                <select name="role" id="role-in-create" required>
-                                    <option value="">Select role</option>
-                                    <option value="Admin">Admin</option>
-                                    <option value="Chef">Chef</option>
-                                    <option value="Cook">Cook</option>
-                                    <option value="Waiter">Waiter</option>
-                                    <option value="Waitress">Waitress</option>
-                                </select><br>
+                                <div>
+                                    <label for="role">Select role</label>
+                                    <select name="role" id="role-in-create" required>
+                                        <option value="">Select role</option>
+                                        <option value="Admin">Admin</option>
+                                        <option value="Chef">Chef</option>
+                                        <option value="Cook">Cook</option>
+                                        <option value="Waiter">Waiter</option>
+                                        <option value="Waitress">Waitress</option>
+                                    </select>
+                                </div>
 
-                                <label for="gender">Select gender</label>
-                                <select name="gender" id="gender-in-create" required>
-                                    <option value="">Select gender</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                </select><br>
+                                <div>
+                                    <label for="gender">Select gender</label>
+                                    <select name="gender" id="gender-in-create" required>
+                                        <option value="">Select gender</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
 
                                 <button type="button" onclick="closeCreateModal()">Cancel</button>
                                 <button type="submit">Create</button>
@@ -120,29 +134,37 @@
                         </div>
                     </div>
                     <div id="update" style="display: none;">
-                        <div class="section-header">
+                        <div class="form-header">
                             <h2 class="section-title">Update user</h2>
                         </div>
                         <div class="form-box">
                             <div style="display: none;" id="updating-user-data-id"></div>
                             <form id="update-form">
 
-                                <label for="name">Input name</label>
-                                <input type="text" name="name" id="name-in-update" required> <br>
+                                <div>
+                                    <label for="name">Input name</label>
+                                    <input type="text" name="name" id="name-in-update" required> <br>
+                                </div>
 
-                                <label for="username">Input username</label>
-                                <input type="text" name="username" id="username-in-update" required> <br>
+                                <div>
+                                    <label for="username">Input username</label>
+                                    <input type="text" name="username" id="username-in-update" required> <br>
+                                </div>
 
-                                <label for="role">Select role</label>
-                                <select name="role" id="role-in-update" required></select><br>
+                                <div>
+                                    <label for="role">Select role</label>
+                                    <select name="role" id="role-in-update" required></select><br>
+                                </div>
 
-                                <label for="gender">Select gender</label>
-                                <select name="gender" id="gender-in-update" required></select><br>
+                                <div>
+                                    <label for="gender">Select gender</label>
+                                    <select name="gender" id="gender-in-update" required></select><br>
+                                </div>
 
                                 <button type="button" onclick="closeUpdateModal()">Cancel</button>
                                 <button type="submit">Update</button>
+                                <button type="button" class="change-password-btn" onclick="openUpdatePassPopup()">Change password</button>
                             </form>
-                            <button onclick="openUpdatePassPopup()">Change password</button>
                             <div class="update-pass-popup"
                                 style="position: fixed; top: 35%; left: 40%; background-color: green;height: 200px; width: 400px; display: none; justify-content: center; align-items: center; flex-wrap: wrap;">
                                 <form id="update-pass-form">
@@ -158,10 +180,7 @@
                     <div id="users" class="food-sects">
                         <div class="section-header">
                             <h2 class="section-title">Users</h2>
-                            <button onclick="openCreateModal()" class="create-btn" id="userCreateButton">
-                                <i class="fa-regular fa-plus"></i>
-                                User qo'shish
-                            </button>
+
                         </div>
                         <div class="user-box">
                             <!-- bu yerda JS yordamida Userlar yig'iladi -->

@@ -174,7 +174,6 @@ function openDeletePopup(id, name, price, image_url, category_id, category_name,
 }
 
 function closeDeletePopup() {
-    document.querySelector('.del-popup').style.display = 'none'
     document.querySelector('.del-popup').classList.remove("active");
     document.querySelector('.del-popup-background').classList.remove("active");
     document.querySelector('.del-popup').removeAttribute('data-id')
