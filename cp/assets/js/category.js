@@ -91,14 +91,13 @@ function openDeletePopup(id, name, active) {
         <p>${name}</p>
     </div>
     <div class="del-actions">
-        <button onclick="closeDeletePopup()">Cancel</button>
-        <button onclick="deleteCategory()">Delete</button>
+        <button class="cancel-btn" onclick="closeDeletePopup()">Cancel</button>
+        <button class="delete-btn" onclick="deleteCategory()">Delete</button>
     </div>
     `;
 };
 
 function closeDeletePopup() {
-    // document.querySelector('.del-popup').style.display = 'none'
     document.querySelector('.del-popup-background').classList.remove("active");
     document.querySelector('.del-popup').classList.remove("active");
     document.querySelector('.del-popup').removeAttribute('data-id')
@@ -170,21 +169,23 @@ updateForm.addEventListener('submit', async e => {
 // Delete category fetch function.
 async function deleteCategory() {
     const id = document.querySelector('.del-popup').dataset.id;
-    document.querySelector(".progress-loader").classList.add("active");
-
     try {
+        document.querySelector(".progress-loader").classList.add("active");
+
         const response = await fetch(`https://api.aif.uz/category/${id}`, {
             method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` }
-        })
-        const res = await response.json()
+        });
+
+        const res = await response.json();
         if (res.status !== 'success') { alert(res.message) }
         closeDeletePopup();
         document.querySelector('.del-popup').removeAttribute('data-id');
         socket.emit('update-menu')
         socket.emit('get-categories', { token });
         document.querySelector(".progress-loader").classList.remove("active");
-
     } catch (error) {
         console.error(error)
+    } finally {
+        document.querySelector(".progress-loader").classList.remove("active");
     }
 };

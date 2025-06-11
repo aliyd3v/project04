@@ -163,32 +163,30 @@
 
                                 <button type="button" onclick="closeUpdateModal()">Cancel</button>
                                 <button type="submit">Update</button>
-                                <button type="button" class="change-password-btn" onclick="openUpdatePassPopup()">Change password</button>
+                                <button type="button" class="change-password-btn" onclick="openUpdatePassPopup()">Change
+                                    password</button>
                             </form>
-                            <div class="update-pass-popup"
-                                style="position: fixed; top: 35%; left: 40%; background-color: green;height: 200px; width: 400px; display: none; justify-content: center; align-items: center; flex-wrap: wrap;">
+                            <div class="update-pass-popup-background"></div>
+                            <div class="update-pass-popup">
                                 <form id="update-pass-form">
                                     <label for="password">Input new password</label>
-                                    <input type="password" name="password" id="password-in-update" required><br>
-
-                                    <button type="button" onclick="closeUpdatePassPopup()">Cancel</button>
-                                    <button type="submit">Change password</button>
+                                    <input type="password" name="password" id="password-in-update"
+                                        placeholder="Yangi parol" required>
+                                    <div class="update-pass-form-actions">
+                                        <button type="button" onclick="closeUpdatePassPopup()">Cancel</button>
+                                        <button type="submit">Change password</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
                     </div>
                     <div id="users" class="food-sects">
-                        <div class="section-header">
-                            <h2 class="section-title">Users</h2>
-
-                        </div>
                         <div class="user-box">
                             <!-- bu yerda JS yordamida Userlar yig'iladi -->
                         </div>
                     </div>
-                    <div class="del-popup"
-                        style="position: fixed; top: 35%; left: 40%; background-color: green;height: 200px; width: 400px; display: none; justify-content: center; align-items: center; flex-wrap: wrap;">
-                    </div>
+                    <div class="del-popup-background"></div>
+                    <div class="del-popup"></div>
                 </div>
             </section>
         </div>

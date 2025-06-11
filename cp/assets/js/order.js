@@ -6,7 +6,8 @@ const token = localStorage.getItem('token')
 const ordersDiv = document.getElementById('orders-container')
 let Orders = []
 let orderTimesArr = []
-const delPopup = document.querySelector('.del-popup')
+const delPopup = document.querySelector('.del-popup');
+const delPopupBackground = document.querySelector('.del-popup-background');
 const closeDelPopup = document.getElementById('close-del-btn')
 const deleteOrderBtn = document.getElementById('order-del-btn')
 
@@ -95,12 +96,13 @@ function renderOrders(Orders) {
         const totalPriceDiv = document.createElement('div');
         totalPriceDiv.classList.add('total-price-div');
         totalPriceDiv.innerHTML = `
-            <div class="price-tag">Jami:
+            <div class="price-tag">
+                Jami:
                 <span>${totalPrice} so'm</span>
             </div>
             <div class="button-box">
 
-                <button class="del-btn">
+                <button class="details-btn">
                     <i class="fa-regular fa-list"></i>
                 </button>
 
@@ -108,7 +110,7 @@ function renderOrders(Orders) {
                     <i class="fa-regular fa-hand"></i>
                 </button>
 
-                <button class="del-btn">
+                <button class="done-btn">
                     <i class="fa-regular fa-badge-check"></i>
                 </button>
 
@@ -143,14 +145,16 @@ function timeShower() {
 // Open del pop-up.
 function openDelPopup(id) {
     delPopup.dataset.id = id
-    delPopup.classList.remove('hidden')
+    delPopup.classList.add("active");
+    delPopupBackground.classList.add("active");
 }
 
 // Close del pop-up.
 closeDelPopup.addEventListener('click', (event) => {
     event.preventDefault();
 
-    delPopup.classList.add('hidden')
+    delPopup.classList.remove("active")
+    delPopupBackground.classList.remove("active")
     delPopup.removeAttribute('data-id')
 })
 
@@ -163,8 +167,9 @@ deleteOrderBtn.addEventListener('click', e => {
 
 // Del order function.
 function delOrder(id) {
-    fetch(`${domain}/order/${id}`, {
-        method: 'delete',
+    document.querySelector(".progress-loader").classList.add("active")
+    fetch(`${url}/order/${id}`, {
+        method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
     })
         .then(res => res.json())
@@ -178,7 +183,12 @@ function delOrder(id) {
         })
         .catch(err => {
             console.error('Fatal error: ' + (err.message || 'unknown error'))
-        })
+        }).finally(
+            delPopup.classList.remove("active"),
+            delPopupBackground.classList.remove("active"),
+            delPopup.removeAttribute('data-id'),
+            document.querySelector(".progress-loader").classList.remove("active"),
+        )
 }
 
 
