@@ -35,15 +35,24 @@ function renderUsers(Users) {
         userItem.className = "user";
 
         userItem.innerHTML = `
-            <div>
-            <img >
+            <img src="" class="user-img background" alt="User's image">
+            <div class="user-role">${el.role}</div>
+            <div class="user-img-wrapper">
+                <img src="" class="user-img" alt="User's image">
             </div>
-            <h3>${el.name}</h3> 
-            <div>
+            <h3 class="user-name">${el.name}</h3> 
+            <div class="user-card-actions">
+                <div>@${el.username}</div>
                 <button onclick="openUpdateModal('${el.id}', '${el.name}', '${el.username}', '${el.role}', '${el.gender}')">Update</button>
-                <button onclick="openDeletePopup('${el.id}', '${el.name}', '${el.username}', '${el.role}', '${el.gender}')">Delete</button>
+                <button onclick="openDeletePopup('${el.id}', '${el.name}', '${el.username}', '${el.role}', '${el.gender}')">O'chirish</button>
             </div>
         `;
+
+        let userImg = userItem.querySelectorAll(".user-img");
+
+        if (userImg) {
+            userImg.forEach(img => img.src = "assets/images/user-image.jpg");
+        }
 
         userBox.appendChild(userItem)
         document.querySelector(".progress-loader").classList.remove("active");
@@ -93,33 +102,39 @@ function closeUpdateModal() {
 
 // Open and close functions for delete popup.
 function openDeletePopup(id, name, username, role, gender) {
-    document.querySelector('.del-popup').style.display = 'flex'
+    document.querySelector('.del-popup').classList.add("active");
+    document.querySelector('.del-popup-background').classList.add("active");
     document.querySelector('.del-popup').dataset.id = id
     document.querySelector('.del-popup').innerHTML = `
-    <div style="width: 100%; display: flex; justify-content: center;">
-        <h3>Delete Category</h3>
+    <div class="del-title">
+        <h3>Foydalanuvchini o'chirish</h3>
     </div>
-    <div style="width: 100%; display: flex; justify-content: center;">
+    <div class="del-name">
         <p>${name}</p>
     </div>
-    <div style="width: 100%;  display: flex; justify-content: center;">
-        <button onclick="closeDeletePopup()">Cancel</button>
-        <button onclick="deleteUser()">Delete</button>
+    <div class="del-actions">
+        <button class="cancel-btn" onclick="closeDeletePopup()">Bekor qilish</button>
+        <button class="delete-btn" onclick="deleteUser()">O'chirish</button>
     </div>`;
 }
 function closeDeletePopup() {
-    document.querySelector('.del-popup').style.display = 'none'
+    document.querySelector('.del-popup').classList.remove("active")
+    document.querySelector('.del-popup-background').classList.remove("active")
     document.querySelector('.del-popup').removeAttribute('data-id')
     document.querySelector('.del-popup').innerHTML = '';
 }
 
 // Open and close functions form update password popup.
 function openUpdatePassPopup() {
-    document.querySelector('.update-pass-popup').style.display = 'block'
+    document.querySelector('.update-pass-popup').classList.add("active");
+    document.querySelector('.update-pass-popup-background').classList.add("active");
 }
 function closeUpdatePassPopup() {
-    document.querySelector('.update-pass-popup').style.display = 'none'
+    document.querySelector('.update-pass-popup').classList.remove("active");
+    document.querySelector('.update-pass-popup-background').classList.remove("active");
 }
+
+// document.querySelector(".update-pass-popup-background").addEventListener("click", closeUpdatePassPopup())
 
 
 // Create user fetch function.
@@ -187,6 +202,7 @@ updateForm.addEventListener('submit', async e => {
 async function deleteUser() {
     const id = document.querySelector('.del-popup').dataset.id
     try {
+        document.querySelector(".progress-loader").classList.add("active");
         const response = await fetch(`https://api.aif.uz/user/${id}`, {
             method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` }
         })
@@ -197,6 +213,8 @@ async function deleteUser() {
         getUsers()
     } catch (error) {
         console.error(error)
+    } finally {
+        document.querySelector(".progress-loader").classList.remove("active");
     }
 }
 
@@ -205,6 +223,8 @@ updatePassForm.addEventListener('submit', async e => {
     e.preventDefault();
     const id = document.getElementById('updating-user-data-id').dataset.id
     try {
+        document.querySelector(".progress-loader").classList.add("active");
+
         const response = await fetch(`https://api.aif.uz/user/${id}`, {
             method: 'PATCH', headers: { 'Authorization': `Bearer ${token}` }
         })
@@ -213,6 +233,8 @@ updatePassForm.addEventListener('submit', async e => {
         closeUpdatePassPopup();
     } catch (error) {
         console.error(error)
+    } finally {
+        document.querySelector(".progress-loader").classList.remove("active");
     }
 })
 

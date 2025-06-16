@@ -42,11 +42,9 @@ socket.on('meals', ({ meals, error }) => {
             </td>
             <td class="product-actions">
                 <button class="update-btn" onclick="openUpdateModal('${el.id}', '${el.name}', '${el.price}', '${el.image_url}', '${el.category_id}', '${el.category_name}', '${el.active}', '${el.is_ready_product}')">
-                    <i class="fa-regular fa-pen"></i>
                     Tahrirlash
                 </button>
                 <button class="delete-btn" onclick="openDeletePopup('${el.id}', '${el.name}', '${el.price}', '${el.image_url}', '${el.category_id}', '${el.category_name}', '${el.active}', '${el.is_ready_product}')">
-                    <i class="fa-regular fa-trash"></i>
                     O'chirish
                 </button>
                 
@@ -168,8 +166,8 @@ function openDeletePopup(id, name, price, image_url, category_id, category_name,
         <p>${name}</p>
     </div>
     <div class="del-actions">
-        <button onclick="closeDeletePopup()">Cancel</button>
-        <button onclick="deleteProduct()">Delete</button>
+        <button onclick="closeDeletePopup()">Bekor qilish</button>
+        <button onclick="deleteProduct()">O'chirish</button>
     </div>`;
 }
 

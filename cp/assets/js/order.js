@@ -5,10 +5,11 @@ const token = localStorage.getItem('token')
 
 const ordersDiv = document.getElementById('orders-container')
 let Orders = []
-let orderTimesArr = []
-const delPopup = document.querySelector('.del-popup')
-const closeDelPopup = document.getElementById('close-del-btn')
-const deleteOrderBtn = document.getElementById('order-del-btn')
+let orderTimesArr = [];
+const delPopup = document.querySelector('.del-popup');
+const delPopupBackground = document.querySelector('.del-popup-background');
+const closeDelPopup = document.getElementById('close-del-btn');
+const deleteOrderBtn = document.getElementById('order-del-btn');
 
 
 function getOrders() {
@@ -38,12 +39,24 @@ socket.on('orders', ({ orders }) => {
 
 document.querySelector(".progress-loader").classList.add("active");
 
+let detailsPopUp = document.querySelector(".details-popup");
+let detailsPopUpBg = document.querySelector(".details-popup-bg");
+let detailsPopUpList = document.querySelector(".details-popup-list");
+
+
 function renderOrders(Orders) {
     ordersDiv.innerHTML = ''
     Orders.forEach(order => {
-        const div = document.createElement('div')
-        div.classList.add('order')
-        div.innerHTML = `
+
+        const formatProductId = (id) => {
+            return `#${id.toString().padStart(6, '0')}`;
+        };
+
+        const orderItem = document.createElement('div');
+
+        orderItem.classList.add('order');
+
+        orderItem.innerHTML = `
 
         <div class="table">
             <div class="table-header">
@@ -51,22 +64,23 @@ function renderOrders(Orders) {
                 <p>Mehmonimiz bo‘lganingiz uchun tashakkur!</p>
             </div>
             <div class="order-number">
-                ID #2546453
+                ID ${formatProductId(order.id)}
             </div>
             <div class="table-number">
-                Table ${order.table.number}
+                Stol ${order.table.number}
             </div>
             <div class="order-timer">
                 <p id="order-${order.id}"></p>
                 <p>dan beri</p>
             </div>
-        </div>`
+        </div>
+        `;
         let totalPrice = 0;
-        const products = document.createElement('div')
+        const products = document.createElement('div');
         products.classList.add('products')
         order.order_items.forEach(meal => {
-            let orderItemStatus
-            let color
+            let orderItemStatus;
+            let color;
             if (meal.status == 'Pending' && !meal.meal.is_ready_product) {
                 orderItemStatus = 'fa-cauldron'
                 color = 'yellow'
@@ -80,44 +94,45 @@ function renderOrders(Orders) {
                 orderItemStatus = 'fa-check-circle'
                 color = 'green'
             }
+            
+
+            if (order.order_items.meal) {
+                console.log(order.order_items.meal, "nmnmm");
+            }
+
+            
             products.innerHTML += `
                 <div class="meals-list">
-                
-                <div class="meal-name">
-                    <i class="fa-regular ${orderItemStatus} ${color}"></i>
-                    ${meal.meal.name}
+                    <div class="meal-name">
+                        <i class="fa-regular ${orderItemStatus} ${color}"></i>
+                        ${meal.meal.name}
+                    </div>
+                    <div class="meal-quantity">x${meal.quantity}</div>
                 </div>
-                <div class="meal-quantity">x${meal.quantity} </div>
-                </div>
-            `
+            `;
+
             totalPrice += meal.quantity * meal.meal.price
         })
         const totalPriceDiv = document.createElement('div');
         totalPriceDiv.classList.add('total-price-div');
         totalPriceDiv.innerHTML = `
-            <div class="price-tag">Jami:
-                <span>${totalPrice} so'm</span>
+            <div class="price-tag">
+                Jami:
+                <span>${totalPrice.toLocaleString()} so'm</span>
             </div>
             <div class="button-box">
 
-                <button class="del-btn">
+                <button class="details-btn" onclick="detailsPopUpOpen(${order.id})">
                     <i class="fa-regular fa-list"></i>
-                </button>
-
-                <button class="del-btn" onclick="openDelPopup(${order.id})">
-                    <i class="fa-regular fa-hand"></i>
-                </button>
-
-                <button class="del-btn">
-                    <i class="fa-regular fa-badge-check"></i>
+                    <span>Ro'yxat</span>
                 </button>
 
             </div>
-        `
+        `;
 
         products.appendChild(totalPriceDiv)
-        div.appendChild(products)
-        ordersDiv.appendChild(div)
+        orderItem.appendChild(products)
+        ordersDiv.appendChild(orderItem)
         orderTimesArr.push({
             element: document.getElementById(`order-${order.id}`),
             created_at: new Date(order.created_at)
@@ -127,6 +142,54 @@ function renderOrders(Orders) {
     document.querySelector(".progress-loader").classList.remove("active");
 }
 
+function detailsPopUpOpen(id) {
+    detailsPopUp.classList.add("active");
+    detailsPopUpBg.classList.add("active");
+    detailsPopUpList.dataset.mealId = id;
+    loadPopUpData()
+}
+
+function detailsPopUpClose() {
+    detailsPopUp.classList.remove("active");
+    detailsPopUpBg.classList.remove("active");
+    detailsPopUpList.removeAttribute("data-meal-id");
+    detailsPopUpList.innerHTML = ""
+}
+
+function loadPopUpData() {
+    const dataSetId = detailsPopUpList.dataset.mealId;
+
+    let order = Orders.find((e) => e.id == dataSetId);
+
+    order.order_items.forEach(meal => {
+
+        let orderItemStatus;
+        let color;
+        if (meal.status == 'Pending' && !meal.meal.is_ready_product) {
+            orderItemStatus = 'fa-cauldron'
+            color = 'yellow'
+        } else if (meal.status == 'Pending' && meal.meal.is_ready_product) {
+            orderItemStatus = 'fa-person-running-fast'
+            color = 'blue'
+        } else if (meal.status == 'Prepared') {
+            orderItemStatus = 'fa-person-running-fast'
+            color = 'blue'
+        } else if (meal.status == 'Delivered') {
+            orderItemStatus = 'fa-check-circle'
+            color = 'green'
+        }
+
+        detailsPopUpList.innerHTML += `
+            <li class="details-list-item">
+                <h3 class="details-list-item-name">
+                    <i class="fa-regular ${orderItemStatus}"></i>
+                    ${meal.meal.name}
+                </h3>
+                <p class="details-list-item-quantity">x${meal.quantity}</p>
+            </li>
+        `;
+    })
+}
 
 function timeShower() {
     const now = new Date()
@@ -143,14 +206,16 @@ function timeShower() {
 // Open del pop-up.
 function openDelPopup(id) {
     delPopup.dataset.id = id
-    delPopup.classList.remove('hidden')
+    delPopup.classList.add("active");
+    delPopupBackground.classList.add("active");
 }
 
 // Close del pop-up.
 closeDelPopup.addEventListener('click', (event) => {
     event.preventDefault();
 
-    delPopup.classList.add('hidden')
+    delPopup.classList.remove("active")
+    delPopupBackground.classList.remove("active")
     delPopup.removeAttribute('data-id')
 })
 
@@ -163,8 +228,9 @@ deleteOrderBtn.addEventListener('click', e => {
 
 // Del order function.
 function delOrder(id) {
-    fetch(`${domain}/order/${id}`, {
-        method: 'delete',
+    document.querySelector(".progress-loader").classList.add("active")
+    fetch(`${url}/order/${id}`, {
+        method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
     })
         .then(res => res.json())
@@ -178,7 +244,12 @@ function delOrder(id) {
         })
         .catch(err => {
             console.error('Fatal error: ' + (err.message || 'unknown error'))
-        })
+        }).finally(
+            delPopup.classList.remove("active"),
+            delPopupBackground.classList.remove("active"),
+            delPopup.removeAttribute('data-id'),
+            document.querySelector(".progress-loader").classList.remove("active"),
+        )
 }
 
 

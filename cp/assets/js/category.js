@@ -19,24 +19,27 @@ socket.on('categories', ({ categories, error }) => {
 
         categoryItem.className = `category`;
 
-
-
         categoryItem.innerHTML = `
-        <div>
             <h3>${el.name}</h3>
-            <div class="category-action">
+            <div>
                 <p>${el.active ? "Faol" : "Faol emas"}</p>
-                <button class="update-btn" onclick="openUpdateModal('${el.id}', '${el.name}', '${el.active}')">
-                    <i class="fa-regular fa-pen"></i>
-                    Update
-                </button>
-                <button class="delete-btn" onclick="openDeletePopup('${el.id}', '${el.name}', '${el.active}')">
-                    <i class="fa-regular fa-trash"></i>
-                    Delete
-                </button>
+                <div class="category-action">
+                    <button class="update-btn" onclick="openUpdateModal('${el.id}', '${el.name}', '${el.active}')">
+                        Update
+                    </button>
+                    <button class="delete-btn" onclick="openDeletePopup('${el.id}', '${el.name}', '${el.active}')">
+                        Delete
+                    </button>
+                </div>
             </div>
-        </div>
+            <img src="" class="category-bg" alt="">
         `;
+
+        let categoryImg = categoryItem.querySelector(".category-bg");
+
+        if (categoryImg) {
+            categoryImg.src = "assets/images/grill-in-cooker.jpeg";
+        }
 
 
         categoriesBox.appendChild(categoryItem)
@@ -78,8 +81,7 @@ function closeUpdateModal() {
 }
 
 // Open and close functions for delete popup.
-function openDeletePopup(id, name, active) {
-    document.querySelector('.del-popup').style.display = 'flex';
+function openDeletePopup(id, name, e) {
     document.querySelector('.del-popup-background').classList.add("active");
     document.querySelector('.del-popup').classList.add("active");
     document.querySelector('.del-popup').dataset.id = id;
@@ -91,14 +93,13 @@ function openDeletePopup(id, name, active) {
         <p>${name}</p>
     </div>
     <div class="del-actions">
-        <button onclick="closeDeletePopup()">Cancel</button>
-        <button onclick="deleteCategory()">Delete</button>
+        <button class="cancel-btn" onclick="closeDeletePopup()">Bekor qilish</button>
+        <button class="delete-btn" onclick="deleteCategory()">O'chirish</button>
     </div>
     `;
 };
 
 function closeDeletePopup() {
-    // document.querySelector('.del-popup').style.display = 'none'
     document.querySelector('.del-popup-background').classList.remove("active");
     document.querySelector('.del-popup').classList.remove("active");
     document.querySelector('.del-popup').removeAttribute('data-id')
@@ -170,21 +171,23 @@ updateForm.addEventListener('submit', async e => {
 // Delete category fetch function.
 async function deleteCategory() {
     const id = document.querySelector('.del-popup').dataset.id;
-    document.querySelector(".progress-loader").classList.add("active");
-
     try {
+        document.querySelector(".progress-loader").classList.add("active");
+
         const response = await fetch(`https://api.aif.uz/category/${id}`, {
             method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` }
-        })
-        const res = await response.json()
+        });
+
+        const res = await response.json();
         if (res.status !== 'success') { alert(res.message) }
         closeDeletePopup();
         document.querySelector('.del-popup').removeAttribute('data-id');
         socket.emit('update-menu')
         socket.emit('get-categories', { token });
         document.querySelector(".progress-loader").classList.remove("active");
-
     } catch (error) {
         console.error(error)
+    } finally {
+        document.querySelector(".progress-loader").classList.remove("active");
     }
 };

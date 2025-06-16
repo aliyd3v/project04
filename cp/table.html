@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./assets/icons/mycafe-favi.png">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.2/css/all.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.js"></script>
     <link rel="stylesheet" href="assets/css/index.css">
@@ -39,25 +40,25 @@
                     <li>
                         <a class="food-sect-links" onclick="director('order')">
                             <i class="fa-solid fa-receipt"></i>
-                            <span>Orders</span>
+                            <span>Buyurtmalar</span>
                         </a>
                     </li>
                     <li>
                         <a class="food-sect-links" onclick="director('table')">
                             <i class="fa-solid fa-chair"></i>
-                            <span>Tables</span>
+                            <span>Stollar</span>
                         </a>
                     </li>
                     <li>
                         <a class="food-sect-links" onclick="director('user')">
                             <i class="fa-solid fa-users"></i>
-                            <span>Users</span>
+                            <span>Foydalanuvchilar</span>
                         </a>
                     </li>
                     <li>
                         <a class="food-sect-links" onclick="director('history')">
                             <i class="fa-solid fa-clock-rotate-left"></i>
-                            <span>History</span>
+                            <span>Arxiv</span>
                         </a>
                     </li>
                 </ul>
@@ -121,9 +122,8 @@
                             <!-- bu yerda JS yordamida Table lar yig'iladi -->
                         </div>
                     </div>
-                    <div class="del-popup"
-                        style="position: fixed; top: 35%; left: 40%; background-color: green;height: 200px; width: 400px; display: none; justify-content: center; align-items: center; flex-wrap: wrap;">
-                    </div>
+                    <div class="del-popup table-del-popup"></div>
+                    <div class="del-popup-background"></div>
                 </div>
             </section>
         </div>
