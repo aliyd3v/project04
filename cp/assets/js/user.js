@@ -44,7 +44,7 @@ function renderUsers(Users) {
             <div class="user-card-actions">
                 <div>@${el.username}</div>
                 <button onclick="openUpdateModal('${el.id}', '${el.name}', '${el.username}', '${el.role}', '${el.gender}')">Update</button>
-                <button onclick="openDeletePopup('${el.id}', '${el.name}', '${el.username}', '${el.role}', '${el.gender}')">Delete</button>
+                <button onclick="openDeletePopup('${el.id}', '${el.name}', '${el.username}', '${el.role}', '${el.gender}')">O'chirish</button>
             </div>
         `;
 
@@ -113,8 +113,8 @@ function openDeletePopup(id, name, username, role, gender) {
         <p>${name}</p>
     </div>
     <div class="del-actions">
-        <button class="cancel-btn" onclick="closeDeletePopup()">Cancel</button>
-        <button class="delete-btn" onclick="deleteUser()">Delete</button>
+        <button class="cancel-btn" onclick="closeDeletePopup()">Bekor qilish</button>
+        <button class="delete-btn" onclick="deleteUser()">O'chirish</button>
     </div>`;
 }
 function closeDeletePopup() {

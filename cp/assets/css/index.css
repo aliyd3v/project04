@@ -5,6 +5,8 @@
 :root {
     --primary: #8A784E;
     --secondary: #fff;
+    --buttongreen: #5CB338;
+    --bgtransparency1: #312e2b;
     --gradient1: radial-gradient(circle, rgba(167, 146, 119, 1) 0%, rgba(138, 120, 78, 1) 100%);
     --title-color: #2b2b2b;
     --font: "Sansation";
@@ -48,10 +50,10 @@ table {
 .button {
     min-width: 250px;
     border: none;
-    border-radius: 16px;
+    border-radius: 12px;
     background-color: var(--primary);
     color: var(--secondary);
-    padding: 10px 24px;
+    padding: 10px 16px;
     font-size: 16px;
     font-family: var(--font);
 }
@@ -72,7 +74,7 @@ table {
     width: 20%;
     height: 100vh;
     padding: 24px 0;
-    backdrop-filter: brightness(35%);
+    backdrop-filter: brightness(25%);
 }
 
 .side-bar .logo {
@@ -98,11 +100,13 @@ table {
             width: 100%;
             padding-block: 14px;
             padding-left: 12%;
-            display: inline-block;
+            display: flex;
             color: white;
 
             & i {
-                margin-right: 6px;
+                display: block;
+                width: 40px;
+                /* margin-right: 6px; */
             }
         }
 
@@ -199,7 +203,7 @@ table {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    backdrop-filter: brightness(35%);
+    backdrop-filter: brightness(25%);
 }
 
 .header-cont {
@@ -233,7 +237,7 @@ table {
     height: 90vh;
     overflow-y: scroll;
     padding-block: 0 20px;
-    background-color: rgba(0, 0, 0, 0.18);
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 .products-table-header {
@@ -303,6 +307,7 @@ table {
     display: grid;
     grid-template-columns: repeat(13, 1fr);
     border-bottom: 1px solid #d3d1cb;
+    background-color: rgba(0, 0, 0, 0.3);
 
     & td {
         height: inherit;
@@ -368,14 +373,14 @@ table {
 
         & button {
             display: block;
-            width: 100%;
+            width: 80%;
         }
 
         & .update-btn {
             border: none;
-            background-color: forestgreen;
-            padding: 10px 24px;
-            border-radius: 16px;
+            background-color: var(--buttongreen);
+            padding: 10px 16px;
+            border-radius: 12px;
             color: white;
             font-family: var(--font);
             font-size: 16px;
@@ -384,8 +389,8 @@ table {
         & .delete-btn {
             border: none;
             background-color: red;
-            padding: 10px 24px;
-            border-radius: 16px;
+            padding: 10px 16px;
+            border-radius: 12px;
             color: white;
             font-family: var(--font);
             font-size: 16px;
@@ -400,9 +405,8 @@ table {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: calc(100% - 20px);
+    width: 100%;
     height: calc(100% - 12px);
-    border-radius: 14px;
     background-color: rgba(0, 0, 0, 0.4);
     z-index: -1;
     transition: 400ms;
@@ -496,14 +500,16 @@ table {
     }
 
     & button[type="submit"] {
-        background-color: forestgreen;
+        background-color: var(--buttongreen);
     }
 
     & button[type="button"].change-password-btn {
-        background-color: var(--primary);
+        background-color: #6F4E37;
+        color: #FFFDD0;
     }
 }
 
+.details-popup-bg,
 .update-pass-popup-background,
 .del-popup-background {
     background-color: rgba(0, 0, 0, 0.6);
@@ -517,8 +523,10 @@ table {
     opacity: 0;
 }
 
+.details-popup-bg.active,
 .update-pass-popup-background.active,
 .del-popup-background.active {
+    z-index: 99;
     opacity: 1;
     pointer-events: all;
     top: 0;
@@ -580,18 +588,20 @@ table {
         & button[type="button"],
         & .delete-btn {
             border: none;
+            font-size: 18px;
             border-radius: 10px;
             background-color: red;
-            padding: 10px 24px;
+            padding: 10px 16px;
             color: white;
         }
 
         & button[type="submit"],
         & .cancel-btn {
             border: none;
+            font-size: 18px;
             border-radius: 10px;
-            background-color: forestgreen;
-            padding: 10px 24px;
+            background-color: var(--buttongreen);
+            padding: 10px 16px;
             color: white;
         }
 
@@ -607,7 +617,9 @@ table {
     }
 }
 
-.category-del-popup {
+.category-del-popup,
+.table-del-popup,
+.user-del-popup {
     & .del-name p {
         font-size: 28px;
         margin-block: 20px;
@@ -673,7 +685,7 @@ table {
         gap: 24px;
 
         & button {
-            padding: 10px 24px;
+            padding: 10px 16px;
             border: none;
             border-radius: 14px;
             font-size: 18px;
@@ -685,7 +697,7 @@ table {
         }
 
         & button[type="submit"] {
-            background-color: forestgreen;
+            background-color: var(--buttongreen);
         }
     }
 }
@@ -709,74 +721,73 @@ table {
     padding-block: 25px 40px;
 }
 
+.category-box {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
 .category {
     border: 3px solid var(--primary);
     border-radius: 20px;
     padding: 20px;
-    margin-bottom: 20px;
     position: relative;
     overflow: hidden;
 
-    & div {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    & div h3 {
+    & h3 {
         font-size: 24px;
         font-weight: 700;
         color: var(--secondary);
+        margin-bottom: 40px;
+    }
+
+    & div {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        & p {
+            font-size: 18px;
+            font-weight: 500;
+            /* margin-right: 50px; */
+            color: var(--secondary);
+        }
     }
 
     & div .category-action {
+        width: max-content;
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 20px;
 
-        & p {
-            font-size: 18px;
-            font-weight: 500;
-            margin-right: 50px;
-            color: var(--secondary);
-        }
-
         & button {
             border: none;
-            padding: 10px 24px;
+            padding: 10px 16px;
             font-size: 18px;
-            border-radius: 16px;
+            border-radius: 12px;
             color: white;
         }
 
         & .update-btn {
-            background-color: forestgreen;
+            background-color: var(--buttongreen);
         }
 
         & .delete-btn {
             background-color: red;
         }
     }
-}
 
-.category::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: calc(100% - 10px);
-    height: calc(100% - 10px);
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.3);
-    transition: 300ms;
-    opacity: 0;
-    z-index: -1;
-    border-radius: 14px;
-}
-
-.category:hover::after {
-    opacity: 1;
+    & .category-bg {
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--title-color);
+    }
 }
 
 .table-box {
@@ -824,7 +835,7 @@ table {
 
             & .update-btn {
                 border-radius: 20px 0 0 20px;
-                background-color: forestgreen;
+                background-color: var(--buttongreen);
             }
 
             & .delete-btn {
@@ -837,7 +848,7 @@ table {
 
 #orders-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
 }
 
@@ -857,6 +868,8 @@ table {
     }
 
     & .table {
+        margin-bottom: 20px;
+
         & .table-header {
             display: flex;
             flex-direction: column;
@@ -900,11 +913,17 @@ table {
     }
 
     & .products {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex: 1;
+
         & .meals-list {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 6px;
+            margin-bottom: 18px;
 
             & .meal-name,
             & .meal-quantity {
@@ -934,25 +953,28 @@ table {
 
         & .button-box {
             width: 100%;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
 
             & button {
-                display: block;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
                 border: none;
                 border-radius: 14px;
-                width: 45px;
-                aspect-ratio: 1 / 1;
+                width: 80%;
+                height: 48px;
                 margin: 0 auto;
                 color: white;
                 font-size: 22px;
                 font-weight: 400;
+
+                & span {
+                    font-size: 18px;
+                }
             }
 
             & button:nth-child(1) {
-                background-color: var(--title-color);
-                /* background-color: var(--primary); */
+                background-color: var(--primary);
             }
 
             & button:nth-child(2) {
@@ -960,10 +982,106 @@ table {
             }
 
             & button:nth-child(3) {
-                background-color: forestgreen;
+                background-color: var(--buttongreen);
             }
         }
     }
+}
+
+
+
+.details-popup {
+    position: fixed;
+    z-index: 111;
+    top: -50%;
+    left: 50%;
+    background-color: white;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    transition: 400ms;
+    opacity: 0;
+    /* styles */
+    width: 60%;
+    /* max-height: 60%; */
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.details-popup.active {
+    opacity: 1;
+    top: 50%;
+    pointer-events: all;
+}
+
+.details-popup-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.details-popup-header {
+    padding: 15px 25px;
+    background-color: white;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 5;
+}
+
+.details-popup-title {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.details-popup-list-wrapper {
+    padding: 0 25px;
+    overflow: hidden;
+}
+
+.details-popup-list {
+    padding-block: 15px;
+    height: 300px;
+    overflow-y: scroll;
+}
+
+.details-list-item {
+    display: flex;
+    align-items: center;
+    gap: 14px ;
+    padding: 14px 0px 14px 20px;
+    border: 1px solid #cbcbcb;
+    border-radius: 14px;
+    margin-bottom: 10px;
+}
+
+.details-list-item-name,
+.details-list-item-quantity {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.details-list-item-name i {
+    display: inline-block;
+    width: 30px;
+    font-size: 24px;
+}
+
+.details-popup-actions {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 5;
+    display: flex;
+    justify-content: end;
+    padding: 10px 25px;
+    background-color: white;
+
+}
+
+.details-popup-actions button {
+    border: none;
+    background-color: var(--title-color);
+    color: var(--secondary);
+    padding: 10px 24px;
+    border-radius: 12px;
+    font-size: 16px;
 }
 
 .user-box {
@@ -1005,7 +1123,7 @@ table {
         aspect-ratio: 1 / 1;
         border-radius: 50%;
         overflow: hidden;
-        box-shadow: 0 0 16px 5px #b0b0b0;
+        box-shadow: 0 0 16px 5px rgba(176, 176, 176, 0.5);
 
         & .user-img {
             width: 100%;
@@ -1032,11 +1150,5 @@ table {
             border-radius: 50px;
             color: rgba(255, 255, 255, 0.8);
         }
-    }
-}
-
-@media screen and (max-width: 1024px) {
-    .product:hover {
-        background-color: var(--secondary);
     }
 }

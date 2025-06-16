@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./assets/icons/mycafe-favi.png">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.2/css/all.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.js"></script>
     <link rel="stylesheet" href="assets/css/index.css">
@@ -39,25 +40,25 @@
                     <li>
                         <a class="food-sect-links" onclick="director('order')">
                             <i class="fa-solid fa-receipt"></i>
-                            <span>Orders</span>
+                            <span>Buyurtmalar</span>
                         </a>
                     </li>
                     <li>
                         <a class="food-sect-links" onclick="director('table')">
                             <i class="fa-solid fa-chair"></i>
-                            <span>Tables</span>
+                            <span>Stollar</span>
                         </a>
                     </li>
                     <li>
                         <a class="food-sect-links" onclick="director('user')">
                             <i class="fa-solid fa-users"></i>
-                            <span>Users</span>
+                            <span>Foydalanuvchilar</span>
                         </a>
                     </li>
                     <li>
                         <a class="food-sect-links" onclick="director('history')">
                             <i class="fa-solid fa-clock-rotate-left"></i>
-                            <span>History</span>
+                            <span>Arxiv</span>
                         </a>
                     </li>
                 </ul>
@@ -86,9 +87,30 @@
                             <div id="orders-container" class="orders-container"></div>
                             <div class="del-popup-background"></div>
                             <div class="del-popup">
-                                <h3>Buyurtma rad etilsinmi?</h3>
-                                <button class="btn" id="close-del-btn">Close</button>
-                                <button class="btn" id="order-del-btn">Delete</button>
+                                <div class="del-title">
+                                    <h3>Buyurtma rad etilsinmi?</h3>
+                                </div>
+                                <div class="del-actions">
+                                    <button class="cancel-btn" id="close-del-btn">Bekor qilish</button>
+                                    <button class="delete-btn" id="order-del-btn">Rad etish</button>
+                                </div>
+                            </div>
+                            <!-- details popup -->
+                            <div class="details-popup-bg"></div>
+                            <div class="details-popup">
+                                <div class="details-popup-content">
+                                    <div class="details-popup-header">
+                                        <h3 class="details-popup-title">
+                                            Buyurtmalar ro'yxati
+                                        </h3>
+                                    </div>
+                                    <div class="details-popup-list-wrapper">
+                                        <ul class="details-popup-list"></ul>
+                                    </div>
+                                </div>
+                                <div class="details-popup-actions">
+                                    <button onclick="detailsPopUpClose()">Yopish</button>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -3,6 +3,7 @@ const token = localStorage.getItem('token')
 const tablesBox = document.querySelector('.table-box')
 const createForm = document.getElementById('create-form')
 const updateForm = document.getElementById('update-form')
+let progressLoader = document.querySelector(".progress-loader");
 
 document.querySelector(".progress-loader").classList.add("active");
 socket.emit('get-tables', { token })
@@ -60,22 +61,26 @@ function closeUpdateModal() {
 
 // Open and close functions for delete popup.
 function openDeletePopup(id, number) {
-    document.querySelector('.del-popup').style.display = 'flex'
+    document.querySelector('.del-popup').classList.add("active")
+    document.querySelector('.del-popup-background').classList.add("active")
     document.querySelector('.del-popup').dataset.id = id
     document.querySelector('.del-popup').innerHTML = `
-    <div style="width: 100%; display: flex; justify-content: center;">
-        <h3>Delete Category</h3>
-    </div>
-    <div style="width: 100%; display: flex; justify-content: center;">
-        <p>${number}</p>
-    </div>
-    <div style="width: 100%;  display: flex; justify-content: center;">
-        <button onclick="closeDeletePopup()">Cancel</button>
-        <button onclick="deleteCategory()">Delete</button>
-    </div>`;
+        <div class="del-title">
+            <h3>Stol o'chirilsinmi?</h3>
+        </div>
+        <div class="del-name">
+            <p>${number}</p>
+        </div>
+        <div class="del-actions">
+            <button class="cancel-btn" onclick="closeDeletePopup()">Bekor qilish</button>
+            <button class="delete-btn" onclick="deleteTable()">O'chirish</button>
+        </div>
+    `;
 }
+
 function closeDeletePopup() {
-    document.querySelector('.del-popup').style.display = 'none'
+    document.querySelector('.del-popup').classList.remove("active");
+    document.querySelector('.del-popup-background').classList.remove("active");
     document.querySelector('.del-popup').removeAttribute('data-id')
     document.querySelector('.del-popup').innerHTML = '';
 }
@@ -85,6 +90,7 @@ function closeDeletePopup() {
 createForm.addEventListener('submit', async e => {
     e.preventDefault();
     try {
+        progressLoader.classList.add("active")
         const params = { number: document.getElementById('number-in-create').value }
         const response = await fetch('https://api.aif.uz/table', {
             method: 'POST',
@@ -103,6 +109,8 @@ createForm.addEventListener('submit', async e => {
         }
     } catch (error) {
         console.error(error)
+    } finally {
+        progressLoader.classList.remove("active");
     }
 })
 
@@ -112,6 +120,7 @@ updateForm.addEventListener('submit', async e => {
     const id = document.getElementById('updating-table-data-id').dataset.id
     const formData = { number: document.getElementById('number-in-update').value }
     try {
+        progressLoader.classList.add("active");
         const response = await fetch(`https://api.aif.uz/table/${id}`, {
             method: 'PUT',
             headers: {
@@ -128,13 +137,16 @@ updateForm.addEventListener('submit', async e => {
         socket.emit('get-tables', { token })
     } catch (error) {
         alert('Error: ' + error || 'Unknown error')
+    } finally {
+        progressLoader.classList.remove("active")
     }
 })
 
 // Delete category fetch function.
-async function deleteCategory() {
+async function deleteTable() {
     const id = document.querySelector('.del-popup').dataset.id
     try {
+        document.querySelector(".progress-loader").classList.add("active");
         const response = await fetch(`https://api.aif.uz/table/${id}`, {
             method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` }
         })
@@ -145,5 +157,7 @@ async function deleteCategory() {
         socket.emit('get-tables', { token });
     } catch (error) {
         console.error(error)
+    } finally {
+        document.querySelector(".progress-loader").classList.remove("active");
     }
 }
