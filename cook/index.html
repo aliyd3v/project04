@@ -8,35 +8,58 @@
     <link rel="stylesheet" href="./assets/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.2/css/all.css">
 </head>
 
 <body>
-    <header class="header">
+    <header class="header section-bottom">
         <div class="container">
             <div class="header-content">
-                <div class="header-content-title">
+                <div class="logo">
                     <h1>MY CAFE</h1>
-                    <p>Oshpazlar</p>
+                </div>
+                <div class="actions-box">
+                    <button class="circle-button">
+                        <i class="fa-regular fa-user"></i>
+                    </button>
+                    <button class="circle-button">
+                        <i class="fa-regular fa-bars"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </header>
 
+    <section class="banner-section section-bottom">
+        <div class="container">
+            <div class="banner-content">
+                <div class="banner-content-title">
+                    <h1>MY CAFE</h1>
+                    <p>Oshpazlar</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <main>
-        <section class="statistics-section">
+        <section class="statistics-section section-bottom">
             <div class="container">
                 <div class="statistics-content">
                     <div class="statistics-item">
-                        <h3>400</h3>
+                        <h3>5</h3>
+                        <p>Kutilayotgan buyurtmalar</p>
                     </div>
                     <div class="statistics-item">
-                        <h3>400</h3>
+                        <h3>34</h3>
+                        <p>Topshirilgan buyurtmalar</p>
                     </div>
                     <div class="statistics-item">
-                        <h3>400</h3>
+                        <h3>2</h3>
+                        <p>Yetkaziladigan buyurtmalar</p>
                     </div>
                     <div class="statistics-item">
-                        <h3>400</h3>
+                        <h3>2</h3>
+                        <p>Bron qilingan buyurtmalar</p>
                     </div>
                 </div>
             </div>
@@ -47,10 +70,10 @@
                     <div class="main-content">
                         <div class="orders-container" id="orders-container"></div>
                     </div>
-                    <div class="side-content">
-                        <aside class="sidebar"></aside>
-                        <aside class="sidebar"></aside>
-                    </div>
+                    <aside class="side-content">
+                        <div class="sidebar-item"></div>
+                        <div class="sidebar-item"></div>
+                    </aside>
                 </div>
             </div>
         </section>
