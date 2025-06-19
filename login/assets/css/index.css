@@ -24,9 +24,11 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: top;
-    backdrop-filter: brightness(80%);
-    padding-inline: 25px;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
 }
 
 #pagePreloader,
@@ -140,7 +142,7 @@ body {
             aspect-ratio: 1 / 1;
             background-color: red;
             color: white;
-            
+
             & i {
                 font-size: 18px;
                 color: white;
@@ -154,20 +156,44 @@ body {
     transition: 450ms;
 }
 
-.form-popup {
-    position: sticky;
-    top: 15%;
-    left: 10%;
-    max-width: 380px;
+.filters {
     width: 100%;
-    height: 70%;
+    height: 100%;
+    backdrop-filter: blur(5px) brightness(60%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-popup {
+    z-index: 3;
+    width: 60%;
     background-color: #ffffff;
-    padding: 30px;
-    border-radius: 6px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    border-radius: 14px;
+}
+
+.form-content {
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-direction: column;
-    backdrop-filter: brightness(80%);
+    width: 50%;
+    padding-inline: 20px;
+}
+
+#login_form {
+    width: 100%;
+}
+
+.form-content,
+.right-side-img {
+    width: 50%;
+    aspect-ratio: 3 / 4;
 }
 
 .form-logo img {
@@ -187,8 +213,8 @@ body {
     width: 100%;
     height: 100%;
     font-size: 18px;
-    border: none;
-    border-bottom: 2px solid var(--primary);
+    border: 2px solid var(--primary);
+    border-radius: 10px;
     padding: 10px 20px;
 }
 
@@ -202,25 +228,85 @@ body {
     width: 100%;
     height: 48px;
     border: none;
+    border-radius: 10px;
     background-color: var(--primary);
     color: white;
     font-size: 18px;
 }
 
+.right-side-img {
+    width: 50%;
+    height: 100%;
+}
 
-@media screen and (max-width: 1024px) {
-    body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+.right-side-img img {
+    width: 100%;
+    height: 100%;
+    border-radius: 14px;
+    object-fit: cover;
+    object-position: top;
+
+}
+
+
+@media screen and (max-width: 900px) {
+    .form-logo img {
+        width: 30%;
+        margin-bottom: 30px;
     }
 
     .form-popup {
-        position: static;
-        background-color: rgba(255, 255, 255, 0.7);
+        width: 55%;
+        flex-direction: column-reverse;
+        padding: 0;
+        gap: 0;
+        box-shadow: 0 0 18px 3px rgba(158, 158, 158, 0.23);
+    }
+
+    .form-content,
+    .right-side-img {
+        width: 100%;
+        aspect-ratio: 2 / 1;
+    }
+
+    .form-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 14px;
+        transform: translateY(-20px);
+    }
+
+    .input-wrapper {
+        margin-bottom: 12px;
+        height: 42px;
+    }
+
+    .input-wrapper input {
+        padding: 6px 14px;
+        font-size: 16px;
+    }
+
+    .submit-btn {
+        font-size: 16px;
+        height: 42px;
+    }
+
+    .right-side-img img {
+        border-radius: 14px 14px 0 0;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .form-popup {
+        width: 80%;
+    }
+
+    .form-content,
+    .right-side-img {
+        aspect-ratio: 3 / 2;
     }
 
     .form-logo img {
-        width: 65%;
+        width: 60%;
     }
 }
