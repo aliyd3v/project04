@@ -6,6 +6,7 @@
   <title>MyCafe Login</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="assets/icons/mycafe-favi.png" type="image/x-icon">
   <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.2/css/all.css">
   <link rel="stylesheet" href="./assets/css/index.css">
 
@@ -31,24 +32,33 @@
       </button>
     </div>
   </div>
-  <div class="form-popup">
-    <div class="form-logo">
-      <img src="assets/icons/myCafe.png" alt="">
-    </div>
-    <form id="login_form" name="login_form" autocomplete="off" method="post"
-      enctype="application/x-www-form-urlencoded">
-      <div class="input-wrapper">
-        <input type="text" id="username" class="username" name="username" size="20" autocapitalize="off"
-          autocorrect="off" autocomplete="on" autofocus="on" required placeholder="Username" />
-      </div>
-      <div class="input-wrapper">
-        <input id="password" type="password" name="password" autocorrect="off" autocomplete="off"
-          autocomplete="new-password" value="" size="20" required placeholder="Password" />
-      </div>
 
-      <button id="submit" type="submit" name="submit" class="submit-btn">Kirish</button>
-    </form>
+  <div class="filters">
+    <div class="form-popup">
+      <div class="form-content">
+        <div class="form-logo">
+          <img src="assets/icons/myCafe.png" alt="">
+        </div>
+        <form id="login_form" name="login_form" autocomplete="off" method="post"
+          enctype="application/x-www-form-urlencoded">
+          <div class="input-wrapper">
+            <input type="text" id="username" class="username" name="username" size="20" autocapitalize="off"
+              autocorrect="off" autocomplete="on" autofocus="on" required placeholder="Username" />
+          </div>
+          <div class="input-wrapper">
+            <input id="password" type="password" name="password" autocorrect="off" autocomplete="off"
+              autocomplete="new-password" value="" size="20" required placeholder="Password" />
+          </div>
+
+          <button id="submit" type="submit" name="submit" class="submit-btn">Kirish</button>
+        </form>
+      </div>
+      <div class="right-side-img">
+        <img src="assets/images/woman-drinking-a-cocktail.jpg" alt="">
+      </div>
+    </div>
   </div>
+
 </body>
 <script src="./assets/js/auth.js"></script>
 <script src="./assets/js/script.js"></script>
