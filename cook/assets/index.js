@@ -134,19 +134,25 @@ function timeShower() {
 
 // Open verify prepared page function.
 function openPreparedVerify(id, name, image_url, quantity) {
-    verifyMealInfo.dataset.order_item = id
+    verifyMealInfo.dataset.order_item = id;
     verifyMealInfo.innerHTML = `
-    <div class="meal-info-img"><img src="${image_url}" alt="${name}"></img></div>
-    <div><p>Quantity: ${quantity}</p></div>
-    <div><p>Meal: ${name}</p></div>`
-    verifyPreparedPopup.classList.remove('hidden')
+        <div class="meal-info-img">
+            <img src="${image_url}" alt="${name}"></div>
+        <div>
+            <p>Quantity: ${quantity}</p>
+        </div>
+        <div>
+            <p>Meal: ${name}</p>
+        </div>
+    `
+    verifyPreparedPopup.classList.add("active");
 }
 
 // Close verify prepared page.
 function closePreparedVerify() {
+    verifyPreparedPopup.classList.remove('active')
     verifyMealInfo.removeAttribute('data-order_item')
     verifyMealInfo.innerHTML = '';
-    verifyPreparedPopup.classList.add('hidden')
 }
 
 // Verify prepared.
