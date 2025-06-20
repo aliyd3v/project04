@@ -74,7 +74,8 @@ table {
     width: 20%;
     height: 100vh;
     padding: 24px 0;
-    backdrop-filter: brightness(25%);
+    backdrop-filter: brightness(15%);
+    border-right: 2px solid var(--secondary);
 }
 
 .side-bar .logo {
@@ -203,7 +204,8 @@ table {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    backdrop-filter: brightness(25%);
+    backdrop-filter: brightness(15%);
+    border-bottom: 2px solid var(--secondary);
 }
 
 .header-cont {
@@ -244,7 +246,7 @@ table {
     width: 100%;
     position: sticky;
     z-index: 10;
-    backdrop-filter: brightness(60%);
+    backdrop-filter: brightness(30%);
     top: 0;
 
     & tr {
@@ -307,7 +309,8 @@ table {
     display: grid;
     grid-template-columns: repeat(13, 1fr);
     border-bottom: 1px solid #d3d1cb;
-    background-color: rgba(0, 0, 0, 0.3);
+    /* background-color: rgba(0, 0, 0, 0.5); */
+    backdrop-filter: brightness(40%);
 
     & td {
         height: inherit;

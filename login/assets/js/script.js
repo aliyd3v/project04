@@ -1,4 +1,3 @@
-
 document.getElementById("pagePreloader").classList.add("active");
 
 window.addEventListener("load", () => {

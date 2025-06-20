@@ -1,6 +1,6 @@
 const form = document.getElementById('login_form');
 let errorAlert = document.querySelector(".error-alert");
-let errorAlertText = document.querySelector(".error-alert h3");
+let errorAlertText = document.querySelector(".error-alert p");
 
 form.addEventListener('submit', async (event) => {
     event.preventDefault();

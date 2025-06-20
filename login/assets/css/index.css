@@ -112,12 +112,15 @@ body {
 
 .error-alert {
     position: fixed;
-    top: -100%;
-    left: 50%;
+    z-index: 100;
+    top: 10%;
+    right: -100%;
+    min-width: 350px;
     transform: translate(-50%, -50%);
-    padding: 18px 20px;
-    background-color: white;
-    border-radius: 14px;
+    padding: 18px 28px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 0 20px -8px rgb(0, 0, 0, 0.3);
+    border-radius: 8px;
     transition: 450ms;
 
     & div {
@@ -125,34 +128,38 @@ body {
         align-items: center;
         gap: 16px;
 
-        & i {
-            font-size: 44px;
-            color: red;
-        }
-
-        & h3 {
-            font-size: 20px;
-            font-weight: 500;
-        }
-
-        & button {
-            border: none;
-            border-radius: 50%;
-            width: 30px;
-            aspect-ratio: 1 / 1;
-            background-color: red;
-            color: white;
+        & .icon-box {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
             & i {
-                font-size: 18px;
-                color: white;
+                font-size: 36px;
+                color: red;
+            }
+        }
+
+        & .text-box {
+            width: 70%;
+            display: block;
+
+            & h3 {
+                font-size: 20px;
+                font-weight: 500;
+                margin-bottom: 6px;
+            }
+
+            & p {
+                height: 18px;
             }
         }
     }
 }
 
 .error-alert.error {
-    top: 10%;
+    right: -10%;
     transition: 450ms;
 }
 
@@ -167,14 +174,14 @@ body {
 
 .form-popup {
     z-index: 3;
-    width: 60%;
-    background-color: #ffffff;
-    padding: 20px;
+    width: 48%;
+    background-color: #fff;
+    padding: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 20px;
-    border-radius: 14px;
+    gap: 16px;
+    border-radius: 24px;
 }
 
 .form-content {
@@ -183,7 +190,7 @@ body {
     align-items: center;
     flex-direction: column;
     width: 50%;
-    padding-inline: 20px;
+    padding-inline: 8px;
 }
 
 #login_form {
@@ -198,13 +205,13 @@ body {
 
 .form-logo img {
     display: block;
-    margin: 0 auto 60px;
-    width: 50%;
+    margin: 0 auto 35px;
+    width: 65%;
 }
 
 .input-wrapper {
     position: relative;
-    height: 48px;
+    height: 42px;
     margin-bottom: 20px;
 }
 
@@ -226,7 +233,7 @@ body {
 .submit-btn {
     display: block;
     width: 100%;
-    height: 48px;
+    height: 42px;
     border: none;
     border-radius: 10px;
     background-color: var(--primary);

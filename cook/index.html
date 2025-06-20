@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cook</title>
+    <link rel="shortcut icon" href="assets/icons/FooBoo-icon.png" type="image/x-icon">
     <link rel="stylesheet" href="./assets/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -16,13 +17,13 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <h1>MY CAFE</h1>
+                    <img src="assets/icons/FooBoo.png" draggable="false" alt="Logo">
                 </div>
                 <div class="actions-box">
-                    <button class="circle-button button-gradient">
+                    <button class="circle-button button-brown">
                         <i class="fa-regular fa-user"></i>
                     </button>
-                    <button class="circle-button button-gradient">
+                    <button class="circle-button button-brown">
                         <i class="fa-regular fa-bars"></i>
                     </button>
                 </div>
@@ -42,6 +43,7 @@
     </section>
 
     <main>
+        <!--  -->
         <section class="statistics-section section-bottom">
             <div class="container">
                 <div class="statistics-content">
@@ -67,25 +69,31 @@
         <section>
             <div class="container">
                 <div class="layout">
-                    <div class="main-content">
-                        <div class="orders-container" id="orders-container"></div>
-                    </div>
                     <aside class="side-content">
                         <div class="sidebar-item">
                             <div class="sidebar-item-header">
+                                <h2 class="title">Kutilayotgan taomlar</h2>
+                            </div>
+                            <div id="orders-container" class="orders-container"></div>
+                        </div>
+                    </aside>
+                    <div class="main-content">
+                        <div class="ongoing-orders" id="ongoing-orders">
+                            <div class="ongoing-orders-header">
                                 <h2 class="title">Tayyorlanayotgan taomlar</h2>
                             </div>
+                            <div class="ongoing-orders-box"></div>
                         </div>
-                        <div class="sidebar-item"></div>
-                    </aside>
+                    </div>
                 </div>
             </div>
         </section>
+
     </main>
 
-    <div class="verify-prepared hidden">
+    <div class="verify-prepared-bg"></div>
+    <div class="verify-prepared">
         <div id="verify-meal-info" class="meal-info"></div>
-
         <div class="verify-popup-btns">
             <div class="verify-question">
                 <h1>Prepared?</h1>
@@ -94,6 +102,8 @@
             <button onclick="closePreparedVerify()">No</button>
         </div>
     </div>
+
+
 
     <script src="./assets/index.js"></script>
 </body>
