@@ -31,6 +31,7 @@ const token = localStorage.getItem('token');
 let Orders = []
 let orderTimesArr = []
 const ordersDiv = document.getElementById('orders-container')
+const verifyPreparedPopupBg = document.querySelector('.verify-prepared-bg')
 const verifyPreparedPopup = document.querySelector('.verify-prepared')
 const selectedMeal = document.querySelector('.meal-info')
 const verifyMealInfo = document.getElementById('verify-meal-info')
@@ -133,8 +134,12 @@ function timeShower() {
 }
 
 // Open verify prepared page function.
+
+
 function openPreparedVerify(id, name, image_url, quantity) {
     verifyMealInfo.dataset.order_item = id;
+    verifyPreparedPopupBg.classList.add("active");
+    verifyPreparedPopup.classList.add("active");
     verifyMealInfo.innerHTML = `
         <div class="meal-info-img">
             <img src="${image_url}" alt="${name}"></div>
@@ -150,7 +155,8 @@ function openPreparedVerify(id, name, image_url, quantity) {
 
 // Close verify prepared page.
 function closePreparedVerify() {
-    verifyPreparedPopup.classList.remove('active')
+    verifyPreparedPopupBg.classList.remove('active');
+    verifyPreparedPopup.classList.remove('active');
     verifyMealInfo.removeAttribute('data-order_item')
     verifyMealInfo.innerHTML = '';
 }

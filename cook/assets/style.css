@@ -3,19 +3,18 @@
 @import url(https://fonts.googleapis.com/css?family=Saira:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic);
 
 :root {
-    --primary: #8A784E;
-    --secondary: #F5F5DC;
+    --primary: #8EB486;
+    --secondary: #fafafa;
     --white: #FFFFFF;
-    --oliveGreen: #6B8E23;
+    --green: #43a047;
     --title-color: #2c2c2c;
     --borderColor1: #c0c2c6;
     --font: "Sansation";
     --font2: "Michroma";
     --font3: "Saira";
-    --boxShadowXs: 0px 0px 20px -2px rgb(0, 0, 0, 0.2);
-    --boxShadowSm: 0px 0px 20px 4px rgb(0, 0, 0, 0.4);
-    --boxShadow: 0px 0px 18px 9px rgb(0, 0, 0, 0.4);
-    --boxShadowWhite: 0px 4px 10px 4px rgb(255, 255, 255, 0.8);
+    --boxShadowXs: 0px 6px 12px -2px rgb(0, 0, 0, 0.2);
+    --boxShadowSm: 0px 6px 16px 4px rgb(0, 0, 0, 0.4);
+    --boxShadow: 0px 6px 20px -4px rgb(0, 0, 0, 0.4);
 }
 
 * {
@@ -84,10 +83,10 @@ button {
 }
 
 .button-green {
-    background-color: var(--oliveGreen);
+    background-color: var(--green);
 }
 
-.button-brown {
+.button-primary {
     background-color: var(--primary);
 }
 
@@ -179,7 +178,7 @@ button {
 .statistics-item h3 {
     font-size: 40px;
     font-weight: 600;
-    color: var(--oliveGreen);
+    color: var(--green);
     margin-bottom: 12px;
     text-align: center;
 }
@@ -198,7 +197,7 @@ button {
     border-radius: 8px;
     width: 70%;
     height: max-content;
-    box-shadow: var(--boxShadowSm);
+    box-shadow: var(--boxShadow);
 }
 
 .side-content {
@@ -211,7 +210,7 @@ button {
     border-radius: 10px;
     width: 100%;
     margin-bottom: 40px;
-    box-shadow: var(--boxShadowSm);
+    box-shadow: var(--boxShadow);
     background-color: var(--secondary);
 }
 
@@ -243,7 +242,7 @@ button {
 }
 
 .order:hover {
-    border-color: var(--secondary);
+    /* border-color: var(--secondary); */
     box-shadow: var(--boxShadowSm);
 }
 
@@ -252,13 +251,13 @@ button {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid var(--oliveGreen);
+    border-bottom: 1px solid var(--green);
 }
 
 .table h3 {
     font-size: 24px;
     font-weight: 700;
-    color: var(--oliveGreen);
+    color: var(--green);
 }
 
 .table h4 {
@@ -270,7 +269,7 @@ button {
 }
 
 .table h4 span {
-    color: var(--oliveGreen);
+    color: var(--green);
 }
 
 .product {
@@ -348,6 +347,7 @@ button {
 }
 
 .ongoing-orders {
+    overflow: hidden;
     border-radius: 8px;
     height: 641px;
     background-color: var(--secondary);
@@ -376,27 +376,39 @@ button {
 
 
 .verify-prepared-bg {
-    display: none;
-    position: sticky;
+    position: fixed;
     z-index: 1000;
-    top: 0;
+    top: -100%;
     left: 0;
     width: 100vw;
     height: 100vh;
     background-color: rgb(0, 0, 0, 0.4);
+    opacity: 0;
+}
+
+.verify-prepared-bg.active {
+    top: 0;
+    opacity: 1;
 }
 
 .verify-prepared {
     position: fixed;
-    z-index: 120;
+    z-index: 1000;
     top: -50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 50vw;
     height: 60vh;
-    background-color: red;
+    background-color: var(--secondary);
     opacity: 0;
     transition: 450ms;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    /* justify-content: center; */
+    border-radius: 14px;
+    padding: 40px;
 }
 
 .verify-prepared.active {
@@ -405,15 +417,10 @@ button {
 }
 
 .meal-info {
-    width: 80%;
-    height: 50vh;
     display: flex;
+    flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    flex-wrap: wrap;
-    font-family: sans-serif;
-    font-weight: bold;
-    font-size: x-large;
     color: black;
     align-content: flex-end;
 }
@@ -424,22 +431,21 @@ button {
     justify-content: center;
 }
 
-.meal-info p {
-    background-color: white;
+.meal-info img {
+    width: 140px;
+    aspect-ratio: 4 / 3;
+    border-radius: 8px;
+}
+
+.meal-info div p {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--title-color);
     border-radius: 8px;
     padding: 5px 10px;
 }
 
-.meal-info img {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-    border-radius: 8px;
-}
-
 .verify-popup-btns {
-    width: 80%;
-    height: 50vh;
     display: flex;
     justify-content: space-evenly;
     align-items: start;
@@ -448,8 +454,8 @@ button {
     gap: 20px;
 }
 
-.verify-question {
-    width: 100%;
+.verify-question h1 {
+    color: var(--title-color);
 }
 
 .verify-popup-btns button {
