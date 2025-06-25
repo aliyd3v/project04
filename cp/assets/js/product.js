@@ -1,8 +1,11 @@
-const socket = io('https://api.aif.uz')
-const token = localStorage.getItem('token')
-const productsBox = document.querySelector('.products-box')
-const createForm = document.getElementById('create-form')
-const updateForm = document.getElementById('update-form')
+const socket = io('https://api.aif.uz');
+const token = localStorage.getItem('token');
+let productsBox = document.querySelector('.products-box');
+let createForm = document.getElementById('create-form');
+let updateForm = document.getElementById('update-form');
+let createFormPopUp = document.querySelector(".create-form");
+let updateFormPopUp = document.querySelector(".update-form");
+let popUpBg = document.querySelector('.popup-bg');
 let Categories = [];
 
 
@@ -78,23 +81,23 @@ function renderCategories(Categories) {
 
 // Open and close functions for create modal.
 function openCreateModal() {
-    document.getElementById('products').style.display = 'none';
-    document.getElementById('create').style.display = 'block';
+    createFormPopUp.classList.add("active");
+    popUpBg.classList.add("active")
 }
+
 function closeCreateModal() {
-    document.getElementById('create-form').reset();
-    document.getElementById('create').style.display = 'none';
-    document.getElementById('products').style.display = 'block';
+    createForm.reset();
+    createFormPopUp.classList.remove("active");
+    popUpBg.classList.remove("active")
 }
 
 // Open and close functions for update modal.
 function openUpdateModal(id, name, price, image_url, category_id, category_name, active, is_ready_product) {
-    document.getElementById('products').style.display = 'none';
-    document.getElementById('updating-product-data-id').dataset.id = id
-    document.getElementById('name-in-update').value = name
-    document.getElementById('price-in-update').value = price
+    document.getElementById('updating-product-data-id').dataset.id = id;
+    document.getElementById('name-in-update').value = name;
+    document.getElementById('price-in-update').value = price;
     document.getElementById('category_id-in-update').innerHTML = `<option value="${category_id}">${category_name}</option>`;
-    const categoriesWithoutCurrentCategory = Categories.filter(e => e.id != category_id)
+    const categoriesWithoutCurrentCategory = Categories.filter(e => e.id != category_id);
     for (const category of categoriesWithoutCurrentCategory) {
         const option = document.createElement('option')
         option.value = category.id
@@ -141,19 +144,18 @@ function openUpdateModal(id, name, price, image_url, category_id, category_name,
         document.getElementById('active-in-update').appendChild(optionNo)
         document.getElementById('active-in-update').appendChild(optionYes)
     }
-    document.getElementById('update').style.display = 'block';
+    updateFormPopUp.classList.add("active");
+    popUpBg.classList.add("active")
 }
 function closeUpdateModal() {
     document.getElementById('updating-product-data-id').removeAttribute('data-id')
     document.getElementById('update-form').reset();
-    document.getElementById('update').style.display = 'none';
-    document.getElementById('products').style.display = 'block';
+    updateFormPopUp.classList.remove("active")
+    popUpBg.classList.remove("active")
 }
 
 // Open and close functions for delete popup.
 function openDeletePopup(id, name, price, image_url, category_id, category_name, active, is_ready_product) {
-    document.querySelector('.del-popup-background').classList.add("active");
-    document.querySelector('.del-popup').classList.add("active");
     document.querySelector('.del-popup').dataset.id = id;
     document.querySelector('.del-popup').innerHTML = `
     <div class="del-title">
@@ -166,9 +168,11 @@ function openDeletePopup(id, name, price, image_url, category_id, category_name,
         <p>${name}</p>
     </div>
     <div class="del-actions">
-        <button onclick="closeDeletePopup()">Bekor qilish</button>
-        <button onclick="deleteProduct()">O'chirish</button>
+        <button class="cancel-btn" onclick="closeDeletePopup()">Bekor qilish</button>
+        <button class="delete-btn" onclick="deleteProduct()">O'chirish</button>
     </div>`;
+    document.querySelector('.del-popup-background').classList.add("active");
+    document.querySelector('.del-popup').classList.add("active");
 }
 
 function closeDeletePopup() {
