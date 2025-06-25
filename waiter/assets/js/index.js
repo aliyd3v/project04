@@ -27,12 +27,15 @@ const socket = io(domain)
 
 let Orders = []
 let orderTimesArr = []
-const ordersDiv = document.getElementById('orders-container')
-const verifyDeliveredPopup = document.querySelector('.verify-delivered')
-const selectedMeal = document.querySelector('.product-info')
-const verifyMealInfo = document.getElementById('verify-product-info')
+let ordersDiv = document.getElementById('orders-container')
+let verifyDeliveredPopup = document.querySelector('.verify-delivered')
+let verifyDeliveredPopupBg = document.querySelector('.verify-delivered-bg')
+let selectedMeal = document.querySelector('.product-info')
+let verifyMealInfo = document.getElementById('verify-product-info');
+let progressLoader = document.querySelector(".progress-loader");
 
 function getOrders() {
+    progressLoader.classList.add("active")
     socket.emit('get-orders', { token })
 }
 
@@ -70,15 +73,15 @@ socket.on('delivered', ({ ok, table, error }) => {
 
 // Render orders function.
 function renderOrders(Orders) {
-    ordersDiv.innerHTML = ''
+    ordersDiv.innerHTML = '';
     Orders.forEach(order => {
         if (order.status == 'Pending' || order.status == 'Prepared') {
             let div = document.createElement('div')
             div.classList.add('order')
             div.innerHTML = `
             <div class="table">
-                <div>Table ${order.table.number}</div>
-                <div id="order-${order.id}"></div>
+                <div class="table-number">${order.table.number}-stol</div>
+                <div id="order-${order.id}" class="table-timer"></div>
             </div>`
             let products = document.createElement('div')
             products.classList.add('products')
@@ -100,9 +103,16 @@ function renderOrders(Orders) {
                     }
                     products.innerHTML += `
                     <div class="product ${item.status == 'Delivered' ? 'product-delivered' : ''}" ${onclickFunction}>
-                        <div><img src="${item.meal.image_url || './images/no-image.png'}" alt="${item.meal.name}"></img></div>
-                        <div>${item.quantity}</div>
-                        <div>${item.meal.name}</div>
+                        <div class="product-img">
+                            <img src="${item.meal.image_url || './images/no-image.png'}" alt="${item.meal.name}">
+                        </div>
+                        <h3 class="product-name">${item.meal.name}</h3>
+                        <p class="product-quantity">${item.quantity}x</p>
+                        <div class="product-status">
+                            <div>
+                                <span>${item.status}</span>
+                            </div>
+                        </div>
                     </div>`
                 }
             })
@@ -117,6 +127,7 @@ function renderOrders(Orders) {
         }
     });
     timeShower()
+    progressLoader.classList.remove("active")
 }
 
 // Show the difference from now with created_at.
@@ -136,17 +147,23 @@ function timeShower() {
 function openDeliveredVerify(id, name, image_url, quantity) {
     verifyMealInfo.dataset.order_item = id
     verifyMealInfo.innerHTML = `
-    <div class="product-info-img"><img src="${image_url}" alt="${name}"></img></div>
-    <div><p>Quantity: ${quantity}</p></div>
-    <div><p>Product: ${name}</p></div>`
-    verifyDeliveredPopup.classList.remove('hidden')
+    <div class="product-info-img">
+        <img src="${image_url}" alt="${name}">
+    </div>
+    <div class="product-info-text">
+        <p>Taom: ${name}</p>
+        <p>Miqdori: ${quantity}x</p>
+    </div>`
+    verifyDeliveredPopup.classList.add("active");
+    verifyDeliveredPopupBg.classList.add("active");
 }
 
 // Close verify delivered page.
 function closeDeliveredVerify() {
     verifyMealInfo.removeAttribute('data-order_item')
     verifyMealInfo.innerHTML = '';
-    verifyDeliveredPopup.classList.add('hidden')
+    verifyDeliveredPopup.classList.remove("active")
+    verifyDeliveredPopupBg.classList.remove("active")
 }
 
 // Verify delivered.

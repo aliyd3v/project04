@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Waiter</title>
+    <link rel="stylesheet" href="assets/css/select-table.css">
     <link rel="stylesheet" href="./assets/css/style.css">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.2/css/all.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.js"></script>
+    <title>Stol tanlash</title>
 </head>
 
 <body>
@@ -40,37 +41,15 @@
     </div>
 
     <main>
-        <section class="banner section-bottom">
+        <section>
             <div class="container">
-                <div class="banner">
-                    <button class="button button-green banner-button new-order-button">
-                        <i class="fa-solid fa-plus"></i>
-                        <span>Yangi buyurtma</span>
-                    </button>
+                <div>
+                    <h3>Stolni tanlash</h3>
                 </div>
             </div>
         </section>
-
-        <section class="orders">
-            <div class="container">
-                <div id="orders-container" class="orders-container"></div>
-            </div>
-        </section>
-
-
-        <!-- verify delivered popup -->
-         <div class="verify-delivered-bg"></div>
-        <div class="verify-delivered">
-            <div id="verify-product-info" class="product-info"></div>
-            <div class="verify-popup-btns">
-                <h1>Delivered?</h1>
-                <div class="verify-buttons">
-                    <button onclick="closeDeliveredVerify()">No</button>
-                    <button onclick="verifyDelivered()">Yes</button>
-                </div>
-            </div>
-        </div>
     </main>
+
 
     <script src="assets/js/index.js"></script>
     <script src="assets/js/script.js"></script>
