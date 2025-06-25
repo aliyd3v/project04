@@ -144,10 +144,10 @@ function openPreparedVerify(id, name, image_url, quantity) {
         <div class="meal-info-img">
             <img src="${image_url}" alt="${name}"></div>
         <div>
-            <p>Quantity: ${quantity}</p>
+            <p>Miqdori: ${quantity}x</p>
         </div>
         <div>
-            <p>Meal: ${name}</p>
+            <p>Nomi: ${name}</p>
         </div>
     `
     verifyPreparedPopup.classList.add("active");
