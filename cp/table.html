@@ -45,7 +45,7 @@
                     </li>
                     <li>
                         <a class="food-sect-links" onclick="director('table')">
-                            <i class="bi bi-1-square"></i>
+                            <i class="bi bi-cup-straw"></i>
                             <span>Stollar</span>
                         </a>
                     </li>
@@ -86,7 +86,7 @@
             </header>
             <section class="content">
                 <div class="container">
-                    <div id="create" style="display: none;">
+                    <div id="create" class="create-form">
                         <div class="form-header">
                             <h2 class="section-title">Stol qo'shish</h2>
                         </div>
@@ -96,12 +96,14 @@
                                     <label for="name">Stol raqami:</label>
                                     <input type="number" name="number" id="number-in-create" required> <br>
                                 </div>
-                                <button type="button" onclick="closeCreateModal()">Bekor qilish</button>
-                                <button type="submit">Qo'shish</button>
+                                <div class="action-box">
+                                    <button type="button" onclick="closeCreateModal()">Bekor qilish</button>
+                                    <button type="submit">Qo'shish</button>
+                                </div>
                             </form>
                         </div>
                     </div>
-                    <div id="update" style="display: none;">
+                    <div id="update" class="update-form">
                         <div class="form-header">
                             <h2 class="section-title">Stolni tahrirlash</h2>
                         </div>
@@ -112,11 +114,14 @@
                                     <label for="name">Stol raqami:</label>
                                     <input type="number" name="number" id="number-in-update" required> <br>
                                 </div>
-                                <button type="button" onclick="closeUpdateModal()">Bekor qilish</button>
-                                <button type="submit">Tahrirlash</button>
+                                <div class="action-box">
+                                    <button type="button" onclick="closeUpdateModal()">Bekor qilish</button>
+                                    <button type="submit">Tahrirlash</button>
+                                </div>
                             </form>
                         </div>
                     </div>
+                    <div class="popup-bg"></div>
                     <div id="tables" class="food-sects">
                         <div class="table-box">
                             <!-- bu yerda JS yordamida Table lar yig'iladi -->

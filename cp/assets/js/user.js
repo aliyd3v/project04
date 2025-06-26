@@ -35,7 +35,6 @@ function renderUsers(Users) {
         userItem.className = "user";
 
         userItem.innerHTML = `
-            <img src="" class="user-img background" alt="User's image">
             <div class="user-role">${el.role}</div>
             <div class="user-img-wrapper">
                 <img src="" class="user-img" alt="User's image">

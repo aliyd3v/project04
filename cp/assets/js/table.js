@@ -3,6 +3,9 @@ const token = localStorage.getItem('token')
 const tablesBox = document.querySelector('.table-box')
 const createForm = document.getElementById('create-form')
 const updateForm = document.getElementById('update-form')
+let createFormPopUp = document.querySelector(".create-form")
+let updateFormPopUp = document.querySelector(".update-form")
+let popUpBg = document.querySelector(".popup-bg");
 let progressLoader = document.querySelector(".progress-loader");
 
 document.querySelector(".progress-loader").classList.add("active");
@@ -36,27 +39,28 @@ socket.on('tables', ({ tables, error }) => {
 
 // Open and close functions for create form modal.
 function openCreateModal() {
-    document.getElementById('tables').style.display = 'none';
-    document.getElementById('create').style.display = 'block';
+    createFormPopUp.classList.add("active");
+    popUpBg.classList.add("active");
 }
+
 function closeCreateModal() {
     createForm.reset();
-    document.getElementById('create').style.display = 'none';
-    document.getElementById('tables').style.display = 'block';
+    createFormPopUp.classList.remove("active");
+    popUpBg.classList.remove("active");
 }
 
 // Open and close functions for update form modal.
 function openUpdateModal(id, number) {
     document.getElementById('updating-table-data-id').dataset.id = id;
     document.getElementById('number-in-update').value = number;
-    document.getElementById('tables').style.display = 'none';
-    document.getElementById('update').style.display = 'block';
+    updateFormPopUp.classList.add("active");
+    popUpBg.classList.add("active");
 }
 function closeUpdateModal() {
     document.getElementById('updating-table-data-id').removeAttribute('data-id')
     updateForm.reset();
-    document.getElementById('update').style.display = 'none';
-    document.getElementById('tables').style.display = 'block';
+    updateFormPopUp.classList.remove("active");
+    popUpBg.classList.remove("active");
 }
 
 // Open and close functions for delete popup.
