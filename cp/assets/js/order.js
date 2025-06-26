@@ -94,13 +94,13 @@ function renderOrders(Orders) {
                 orderItemStatus = 'fa-check-circle'
                 color = 'green'
             }
-            
+
 
             if (order.order_items.meal) {
                 console.log(order.order_items.meal, "nmnmm");
             }
 
-            
+
             products.innerHTML += `
                 <div class="meals-list">
                     <div class="meal-name">
@@ -130,14 +130,25 @@ function renderOrders(Orders) {
             </div>
         `;
 
-        products.appendChild(totalPriceDiv)
         orderItem.appendChild(products)
+        orderItem.appendChild(totalPriceDiv)
         ordersDiv.appendChild(orderItem)
         orderTimesArr.push({
             element: document.getElementById(`order-${order.id}`),
             created_at: new Date(order.created_at)
-        })
+        });
+
+        requestAnimationFrame(() => {
+            let productsItem = orderItem.querySelector(".products");
+            let productsItemHeight = productsItem.getBoundingClientRect().height;
+            console.log("Products height:", productsItemHeight); // bu 200px chiqadi
+
+            if (productsItemHeight > 140) {
+                productsItem.classList.add("too-long-item");
+            }
+        });
     });
+
     timeShower()
     document.querySelector(".progress-loader").classList.remove("active");
 }
@@ -251,7 +262,5 @@ function delOrder(id) {
             document.querySelector(".progress-loader").classList.remove("active"),
         )
 }
-
-
 
 document.addEventListener("DOMContentLoaded", getOrders);

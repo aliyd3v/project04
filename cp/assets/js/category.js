@@ -1,8 +1,11 @@
 const socket = io('https://api.aif.uz')
 const token = localStorage.getItem('token')
 const categoriesBox = document.querySelector('.category-box')
-const createForm = document.getElementById('create-form')
-const updateForm = document.getElementById('update-form')
+const createForm = document.getElementById('create-form');
+const updateForm = document.getElementById('update-form');
+let createFormPopUp = document.querySelector(".create-form");
+let updateFormPopUp = document.querySelector(".update-form");
+let popUpBg = document.querySelector(".popup-bg");
 
 document.querySelector(".progress-loader").classList.add("active");
 
@@ -48,13 +51,13 @@ socket.on('categories', ({ categories, error }) => {
 
 // Open and close functions for create form modal.
 function openCreateModal() {
-    document.getElementById('categories').style.display = 'none';
-    document.getElementById('create').style.display = 'block';
+    createFormPopUp.classList.add("active");
+    popUpBg.classList.add("active")
 }
 function closeCreateModal() {
     createForm.reset();
-    document.getElementById('create').style.display = 'none';
-    document.getElementById('categories').style.display = 'block';
+    createFormPopUp.classList.remove("active");
+    popUpBg.classList.remove("active")
 }
 
 // Open and close functions for update form modal.
@@ -70,14 +73,14 @@ function openUpdateModal(id, name, active) {
             <option value="0">No</option>
             <option value="1">Yes</option>`
     }
-    document.getElementById('categories').style.display = 'none';
-    document.getElementById('update').style.display = 'block';
+    updateFormPopUp.classList.add("active");
+    popUpBg.classList.add("active");
 }
 function closeUpdateModal() {
     document.getElementById('updating-category-data-id').removeAttribute('data-id')
     updateForm.reset();
-    document.getElementById('update').style.display = 'none';
-    document.getElementById('categories').style.display = 'block';
+    updateFormPopUp.classList.remove("active");
+    popUpBg.classList.remove("active");
 }
 
 // Open and close functions for delete popup.
